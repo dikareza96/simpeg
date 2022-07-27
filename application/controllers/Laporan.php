@@ -1,0 +1,501 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Laporan extends CI_Controller {
+
+	
+	
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->helper(array('form', 'url','file', 'text'));
+		$this->load->model('Resource');
+		date_default_timezone_set('Asia/Jakarta');
+		
+		// if($this->session->userdata('level') <> 'admin')
+		// 		{
+		// 			redirect('backend/login');
+		// 		}
+	}
+
+	protected $table = 'pengaduan'; 
+	protected $module = 'laporan';
+	
+	function index()
+	{
+		if($this->session->userdata('level')=='karumkit' || $this->session->userdata('level')=='admin'){
+			$module = $this->module;
+
+			$masuk = $this->db->query("SELECT * FROM pengaduan");
+			$data['masuk'] = $masuk->num_rows();
+
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 1");
+			$data['proses'] = $proses->num_rows();
+
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 2');
+			$data['selesai'] = $selesai->num_rows();
+
+
+			
+			$data['route'] = $this->module;
+			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at,b.name as korban
+				FROM pengaduan a 
+				INNER JOIN user b  ON a.user_pelapor = b.id
+				")->result();
+			// $data[$module] = $this->Resource->show($this->table)->result();
+			$this->load->view('backend/template/header');
+			$this->load->view('backend/template/sidebar');
+			$this->load->view('backend/modules/'.$module.'/index',$data);
+			$this->load->view('backend/template/footer');
+		}elseif($this->session->userdata('level')=='komite_medik'){
+			$get_user_level = $this->session->userdata('level');
+			$module = $this->module;
+
+			$masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
+				FROM pengaduan a 
+				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+				where c.id_komite = '$get_user_level'");
+			$data['masuk'] = $masuk->num_rows();
+
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 1");
+			$data['proses'] = $proses->num_rows();
+
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 2');
+			$data['selesai'] = $selesai->num_rows();
+			
+			$data['route'] = $this->module;
+			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at ,b.name as korban
+				FROM pengaduan a 
+				INNER JOIN user b  ON a.user_pelapor = b.id
+				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+				where c.id_komite = '$get_user_level'")->result();
+			$this->load->view('backend/template/header');
+			$this->load->view('backend/template/sidebar');
+			$this->load->view('backend/modules/'.$module.'/index',$data);
+			$this->load->view('backend/template/footer');
+		}elseif($this->session->userdata('level')=='komite_etik'){
+			$get_user_level = $this->session->userdata('level');
+			$module = $this->module;
+
+			$masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
+				FROM pengaduan a 
+				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+				where c.id_komite = '$get_user_level'");
+			$data['masuk'] = $masuk->num_rows();
+
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 1");
+			$data['proses'] = $proses->num_rows();
+
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 2');
+			$data['selesai'] = $selesai->num_rows();
+			
+			$data['route'] = $this->module;
+			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at ,b.name as korban
+				FROM pengaduan a 
+				INNER JOIN user b  ON a.user_pelapor = b.id
+				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+				where c.id_komite = '$get_user_level'")->result();
+			$this->load->view('backend/template/header');
+			$this->load->view('backend/template/sidebar');
+			$this->load->view('backend/modules/'.$module.'/index',$data);
+			$this->load->view('backend/template/footer');
+		}elseif($this->session->userdata('level')=='komite_tenaga'){
+			$get_user_level = $this->session->userdata('level');
+			$module = $this->module;
+
+			$masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
+				FROM pengaduan a 
+				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+				where c.id_komite = '$get_user_level'");
+			$data['masuk'] = $masuk->num_rows();
+
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 1");
+			$data['proses'] = $proses->num_rows();
+
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 2');
+			$data['selesai'] = $selesai->num_rows();
+			
+			$data['route'] = $this->module;
+			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at ,b.name as korban
+				FROM pengaduan a 
+				INNER JOIN user b  ON a.user_pelapor = b.id
+				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+				where c.id_komite = '$get_user_level'")->result();
+			$this->load->view('backend/template/header');
+			$this->load->view('backend/template/sidebar');
+			$this->load->view('backend/modules/'.$module.'/index',$data);
+			$this->load->view('backend/template/footer');
+		}elseif($this->session->userdata('level')=='komite_'){
+			$get_user_level = $this->session->userdata('level');
+			$module = $this->module;
+
+			$masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
+				FROM pengaduan a 
+				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+				where c.id_komite = '$get_user_level'");
+			$data['masuk'] = $masuk->num_rows();
+
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 1");
+			$data['proses'] = $proses->num_rows();
+
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 2');
+			$data['selesai'] = $selesai->num_rows();
+			
+			$data['route'] = $this->module;
+			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at ,b.name as korban
+				FROM pengaduan a 
+				INNER JOIN user b  ON a.user_pelapor = b.id
+				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+				where c.id_komite = '$get_user_level'")->result();
+			$this->load->view('backend/template/header');
+			$this->load->view('backend/template/sidebar');
+			$this->load->view('backend/modules/'.$module.'/index',$data);
+			$this->load->view('backend/template/footer');
+		}else{
+			echo "Anda tidak berhak mengakses halaman ini";
+
+		}
+		
+	}
+	function create()
+	{
+		$module = $this->table;
+		$data['route'] = $this->table;
+		$this->load->view('backend/template/header');
+		$this->load->view('backend/template/sidebar');
+		$this->load->view('backend/modules/'.$module.'/create',$data);
+		$this->load->view('backend/template/footer');
+	}
+	function store()
+	{
+		$module = $this->table;
+		$this->form_validation->set_rules('content', 'Judul', 'required');
+		$this->form_validation->set_rules('name', 'Isi Berita', 'required');
+		$this->form_validation->set_rules('profesi', 'Kategori', 'required');
+		$data['status']="sukses";
+		$data['error']="";
+		$this->load->library('upload');
+		$nmfile = "file_".time(); 
+		$config['upload_path'] = './assets/uploads/'; 
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; 
+		$config['max_size']             = 2000;
+		$config['max_width']            = 2048;
+		$config['max_height']           = 2048;
+		$config['file_name'] = $nmfile;
+		$this->upload->initialize($config);
+		if ($this->form_validation->run() == FALSE){
+			$data["status"]="error";
+			$data["error"]=validation_errors();				
+		}else{
+			if(isset($_FILES['image'])){
+				if($_FILES['image']['name'])
+				{
+					if ($this->upload->do_upload('image'))
+					{
+						$gbr = $this->upload->data();
+
+					} 
+				}
+			}
+
+		}
+		if($data["status"]=="sukses"){
+			$content = $this->input->post('content');
+			$name = $this->input->post('name');
+			$profesi = $this->input->post('profesi');
+
+			$data = array(
+				'content' => $content,
+				'profesi' => $profesi,
+				'name' => $name,
+				'img' =>$gbr['file_name']
+
+			);
+			$this->Resource->store($data,$this->table);  
+		}
+		
+
+		redirect(''.$module.'/index');
+	}
+	function edit($id){ 
+		$user_komite = $this->session->userdata('level');
+		$module = $this->module;
+		$data['route'] = $this->table;
+		$where = array('id' => $id);
+		$data['komite'] = $this->db->query("SELECT c.id_komite
+			FROM pengaduan a 
+			INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+			where a.id = '4'")->result();
+		// kirim
+		$komite = $this->db->query("SELECT c.id_komite
+			FROM pengaduan a 
+			INNER JOIN transaksi c  ON a.id = c.id_pengaduan
+			where a.id = '$id'
+			order by c.id_komite ASC")->result_array();
+		foreach ($komite as $key => $val) {
+			$rows []= $val;
+		}
+		if(!empty($rows[0]['id_komite'])){
+
+			$data['komite1'] =  $rows[0]['id_komite']; 
+		}
+		if(!empty($rows[1]['id_komite'])){
+
+			$data['komite2'] =  $rows[1]['id_komite'];
+
+		}if(!empty($rows[2]['id_komite'])){
+
+			$data['komite3'] =  $rows[2]['id_komite'];
+
+		}if(!empty($rows[3]['id_komite'])){
+
+			$data['komite4'] =  $rows[3]['id_komite'];
+         	// $komite4 =  $rows[3]['id_komite'];
+		}
+		// TINDAK LANJUT
+		$tindak_lanjut = $this->db->query("SELECT a.jenis_komplain,a.jenis_laporan,a.tindak_lanjut
+			FROM tindak_lanjut a
+			INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan = '$id' AND a.id_komite = '$user_komite'")->result_array();
+		foreach ($tindak_lanjut as $key => $val) {
+			$tindak []= $val;
+		}
+		if(!empty($tindak[0]['jenis_laporan'])){
+
+			$data['jenis_laporan'] = $tindak[0]['jenis_laporan'];
+		}if(!empty($tindak[0]['jenis_komplain'])){
+
+			$data['jenis_komplain'] = $tindak[0]['jenis_komplain'];
+			// $jenis_komplain = $tindak[0]['jenis_komplain'];
+		}if(!empty($tindak[0]['tindak_lanjut'])){
+
+			$data['tindak_lanjut'] = $tindak[0]['tindak_lanjut'];
+			// $tindaks = $tindak[0]['tindak_lanjut'];
+		}
+		
+		
+		 // var_dump($jenis_komplain,$tindaks);
+
+
+		// TINDAK LANJUT
+		// foreach ($tindak_lanjut as $key => $val) {
+		// 	$tindak []= $val;
+		// }
+
+		  // var_dump($komite4);
+
+    			// $data['komite1'] =  $rows[0]['id_komite'];    
+				// $data['komite2'] =  $rows[1]['id_komite'];
+				// $data['komite3'] =  $rows[2]['id_komite'];
+    			// $data['komite4'] =  $rows[3]['id_komite'];
+
+         // $komite3 =  $rows[2]['id_komite'];
+         // $komite4 =  $rows[3]['id_komite'];
+		
+		// header('Content-Type: application/json');
+
+        // $dump =  json_encode($komite);
+
+		// $data[$module] = $this->Resource->edit($where,$this->table)->result();
+		$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at,b.name as korban
+			FROM pengaduan a 
+			INNER JOIN user b  ON a.user_pelapor = b.id
+			where a.id = '$id'
+			")->result();
+		$this->load->view('backend/template/header');
+		$this->load->view('backend/template/sidebar');
+		$this->load->view('backend/modules/'.$module.'/edit',$data);
+		$this->load->view('backend/template/footer');
+	}
+	function tindak_lanjut($id){ 
+		$module = $this->module;
+		$data['route'] = $this->table;
+		$where = array('id' => $id);
+		$vote_jenis_laporan = $this->db->query("SELECT
+			a.jenis_laporan,
+			COUNT(a.jenis_laporan) AS vote_jenis_laporan 
+			FROM
+			tindak_lanjut a
+			INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan  = '$id'
+			GROUP BY 
+			jenis_laporan
+			ORDER BY 
+			vote_jenis_laporan DESC
+			LIMIT 1")->result_array();
+		$vote_jenis_komplain = $this->db->query("SELECT
+			a.jenis_komplain,
+			COUNT(a.jenis_komplain) AS vote_jenis_komplain
+
+			FROM
+			tindak_lanjut a
+			INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan  = '$id'
+			GROUP BY 
+			jenis_komplain
+			ORDER BY 
+			vote_jenis_komplain DESC
+			LIMIT 1")->result_array();
+		$list_tindak_lanjut = $this->db->query("SELECT
+			a.id_pengaduan,a.tindak_lanjut,a.id_komite, a.created_at
+
+			FROM
+			tindak_lanjut a
+			INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan  = '$id'
+			GROUP BY
+			id_komite ASC")->result_array();
+
+		foreach ($vote_jenis_laporan as $key => $val) {
+			$vote1 []= $val;
+		}
+		foreach ($vote_jenis_komplain as $key => $val) {
+			$vote2 []= $val;
+		}
+		foreach ($list_tindak_lanjut as $key => $val) {
+			$vote3 []= $val;
+		}
+		foreach ($list_tindak_lanjut as $key => $val) {
+			$vote4 []= $val;
+		}
+		if(!empty($vote1[0]['jenis_laporan'])){
+
+			$data['jenis_laporan'] = $vote1[0]['jenis_laporan'];
+		}if(!empty($vote2[0]['jenis_komplain'])){
+
+			$data['jenis_komplain'] = $vote2[0]['jenis_komplain'];
+			// $jenis_komplain = $tindak[0]['jenis_komplain'];
+		}if(!empty($vote3[0]['tindak_lanjut'])){
+
+			$data['tindak_lanjut1'] = $vote3[0]['tindak_lanjut'];
+			
+		}if(!empty($vote3[1]['tindak_lanjut'])){
+
+			$data['tindak_lanjut2'] = $vote3[1]['tindak_lanjut'];
+			
+		}if(!empty($vote3[2]['tindak_lanjut'])){
+
+			$data['tindak_lanjut3'] = $vote3[2]['tindak_lanjut'];
+			
+		}if(!empty($vote3[3]['tindak_lanjut'])){
+			$data['tindak_lanjut4'] = $vote3[3]['tindak_lanjut'];
+		}
+		// nama komite parse
+		if(!empty($vote3[0]['id_komite'])){
+			$data['nama_komite1'] = $vote3[0]['id_komite'];
+			$etik = $vote3[0]['id_komite'];
+		}if(!empty($vote3[1]['id_komite'])){
+			$data['nama_komite2'] = $vote3[1]['id_komite'];
+			$keperawatan = $vote3[1]['id_komite'];
+		}if(!empty($vote3[2]['id_komite'])){
+			$data['nama_komite3'] = $vote3[2]['id_komite'];
+			$medik = $vote3[2]['id_komite'];
+		}if(!empty($vote3[3]['id_komite'])){
+			$data['nama_komite4'] = $vote3[3]['id_komite'];
+			$tenaga = $vote3[3]['id_komite'];
+
+			
+
+		}
+		// var_dump($etik, $keperawatan, $medik, $tenaga);
+		$data[$module] = $this->Resource->edit($where,$this->table)->result();
+		$this->load->view('backend/template/header');
+		$this->load->view('backend/template/sidebar');
+		$this->load->view('backend/modules/'.$module.'/tindak_lanjut',$data);
+		$this->load->view('backend/template/footer');
+	}
+	function tutup_aduan($id){ 
+		$module = $this->module;
+		$data['route'] = $this->table;
+		$where = array('id' => $id);
+		$data[$module] = $this->Resource->edit($where,$this->table)->result();
+		$this->load->view('backend/template/header');
+		$this->load->view('backend/template/sidebar');
+		$this->load->view('backend/modules/'.$module.'/tutup_aduan',$data);
+		$this->load->view('backend/template/footer');
+	}
+
+	function update(){
+		
+		$module = $this->table;
+		$this->load->library('upload');
+		$nmfile = "file_".time(); 
+		$config['upload_path'] = './assets/uploads/'; 
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; 
+		$config['max_size']             = 5000;
+		$config['max_width']            = 2048;
+		$config['max_height']           = 2048;
+		$config['file_name'] = $nmfile;
+		$this->upload->initialize($config);
+
+		$id = $this->input->post('id');
+		$check = $this->input->post('komite');
+		$jenis_laporan = $this->input->post('jenis_laporan');
+		$jenis_komplain = $this->input->post('jenis_komplain');
+		$tindak_lanjut_komite = $this->input->post('tindak_lanjut_komite');
+		if(!empty($check)){
+			foreach ($check as $row) {
+				$data = array(
+					'id_pengaduan' => $id,
+					'id_komite' => $row
+
+				);
+				$this->Resource->komite(array('id_pengaduan'=> $id,'id_komite' => $row  ));
+			}
+			redirect('laporan/index');
+		}elseif(!empty($jenis_laporan)){
+			
+			$data = array(
+				'id_pengaduan' => $id,
+				'id_komite' => $this->session->userdata('level'),
+				'jenis_laporan' => $jenis_laporan,
+				'jenis_komplain' => $jenis_komplain,
+				'tindak_lanjut' => $tindak_lanjut_komite,
+				'created_at' =>	date('Y-m-d H:i:s')						
+			);
+			$this->Resource->store($data,'tindak_lanjut' );
+
+			redirect('laporan/index');
+
+		}else{
+
+			$data = array(
+				'content' => $content,
+				'name' => $name,
+				'profesi' => $profesi,
+
+			);
+			if($_FILES['image']['name'])
+			{
+				if ($this->upload->do_upload('image'))
+				{
+
+					$gbr = $this->upload->data();
+					$data['img'] = $gbr['file_name'];
+					
+					
+				} 
+			}
+			$where = array(
+				'id' => $id
+			);
+			$this->Resource->update($where,$data,$this->table);
+			redirect('laporan/index');
+		}
+
+
+	}
+	function destroy ($id){ 
+		$module = $this->table;
+		$where = array('id' => $id);
+		$this->Resource->destroy($where,$this->table);
+
+
+		redirect(''.$module.'/index'); 
+	}
+	
+	
+
+
+
+}
