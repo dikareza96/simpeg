@@ -16,7 +16,7 @@
 
     <!-- Main content -->
     <section class="content">
-        <form role="form" method="POST" enctype="multipart/form-data" action="<?php echo base_url("".$route."/update");?>">
+        <form role="form" method="POST" enctype="multipart/form-data" action="<?php echo base_url("laporan/update");?>">
 
             <div class="row">
                 <!-- left column -->
@@ -96,172 +96,162 @@
                     }
 
                 }else{
-                        $etik = '';
-                    }
+                    $etik = '';
+                }
 
-                if(!empty($nama_komite1)){
+                if(!empty($nama_komite2)){
                     if($nama_komite2 == 'komite_keperawatan') {
                         $keperawatan = 'Komite Keperawatan';
                     }
                 }else{
-                        $keperawatan = '';
-                    }
-                if(!empty($nama_komite1)){
+                    $keperawatan = '';
+                }
+                if(!empty($nama_komite3)){
                     if($nama_komite3 == 'komite_medik') {
                         $medik = 'Komite Medik';
 
                     }
                 }else{
-                        $medik = '';
-                    }
-                if(!empty($nama_komite1)){
+                    $medik = '';
+                }
+                if(!empty($nama_komite4)){
                     if($nama_komite4 == 'komite_tenaga') {
                         $tenaga = 'Komite Tenaga Kesehatan Lain';
                     }
                 }else{
-                        $tenaga = '';
-                    }
+                    $tenaga = '';
+                }
 
-                    if(!empty($tindak_lanjut1)){
-                        $tindak_lanjut1 = '';
-                    }if(!empty($tindak_lanjut2)){
-                        $tindak_lanjut2 = '';
-                    }if(!empty($tindak_lanjut3)){
-                        $tindak_lanjut3 = '';
-                    }if(!empty($tindak_lanjut4)){
-                        $tindak_lanjut4 = '';
+                // if(!empty($tindak_lanjut1)){
+                //     $tindak_lanjut1 = '';
+                // }if(!empty($tindak_lanjut2)){
+                //     $tindak_lanjut2 = '';
+                // }if(!empty($tindak_lanjut3)){
+                //     $tindak_lanjut3 = '';
+                // }if(!empty($tindak_lanjut4)){
+                //     $tindak_lanjut4 = '';
+                // }
+                ?>
+
+                <?php
+                 foreach($tindak_lanjut_komite as $get_nama){
+                          if($get_nama->id_komite == 'komite_etik' ){
+                                  $nama_komite = 'Komite Etik & Hukum';
+                           }if($get_nama->id_komite == 'komite_keperawatan' ){
+                                  $nama_komite = 'Komite Etik & Hukum';
+                           }if($get_nama->id_komite == 'komite_medik' ){
+                                  $nama_komite = 'Komite Medik';
+                           }if($get_nama->id_komite == 'komite_tenaga' ){
+                                  $nama_komite = 'Komite Tenaga Kesehatan Lain';
+                                }
                     }
                 ?>
 
 
 
-                <?php if(!empty($tindak_lanjut1)){?>
-                <div class="form-group">
-                   <label for="exampleInputEmail1">Tindak lanjut <?php echo $etik; ?></label>
-                   <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $tindak_lanjut1; ?></textarea>
-               </div>
-           <?php }else{?>
-            <div class="form-group">
-                   <label for="exampleInputEmail1">Tindak lanjut</label>
-                   <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belum mengisi tindak lanjut</textarea>
-               </div>
-           <?php }?>
-            <?php if(!empty($tindak_lanjut2)){?>
-                <div class="form-group">
-                   <label for="exampleInputEmail1">Tindak lanjut <?php echo $keperawatan; ?></label>
-                   <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $tindak_lanjut2; ?></textarea>
-               </div>
-           <?php }else{?>
-            <div class="form-group">
-                   <label for="exampleInputEmail1">Tindak lanjut</label>
-                   <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belum mengisi tindak lanjut</textarea>
-               </div>
-           <?php }?>
-            <?php if(!empty($tindak_lanjut3)){?>
-                <div class="form-group">
-                   <label for="exampleInputEmail1">Tindak lanjut <?php echo $medik; ?></label>
-                   <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $tindak_lanjut3; ?></textarea>
-               </div>
-           <?php }else{?>
-            <div class="form-group">
-                   <label for="exampleInputEmail1">Tindak lanjut</label>
-                   <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belum mengisi tindak lanjut</textarea>
-               </div>
-           <?php }?>
-            <?php if(!empty($tindak_lanjut4)){?>
-                <div class="form-group">
-                   <label for="exampleInputEmail1">Tindak lanjut <?php echo $tenaga; ?></label>
-                   <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $tindak_lanjut4; ?></textarea>
-               </div>
-           <?php }else{?>
-            <div class="form-group">
-                   <label for="exampleInputEmail1">Tindak lanjut</label>
-                   <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belum mengisi tindak lanjut</textarea>
-               </div>
-           <?php }?>
-               
-              
-               <div class="form-group">
-
-                <label for="exampleInputEmail1">Jenis komplain: </label>
-                <?php 
-                if('1' ==  $jenis_komplain){
-                    ?>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="jenis_komplain" value="1" checked disabled>
-                            Perilaku yang mengganggu
-                        </label>
-                    </div>
-                <?php }else{ ?>
-                 <div class="radio">
-                    <label>
-                        <input type="radio" name="jenis_komplain" value="1" disabled>
-                        Perilaku yang mengganggu
-                    </label>
-                </div>
-            <?php } ?>
-            <?php if('2' ==  $jenis_komplain){
-                ?>
-
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="jenis_komplain" value="2" checked disabled>
-                        Perilaku yang tidak layak
-                    </label>
-                </div>
-            <?php }else{ ?>
-             <div class="radio">
-                <label>
-                    <input type="radio" name="jenis_komplain" value="2" disabled>
-                    Perilaku yang tidak layak
-                </label>
-            </div>
-        <?php } ?>
+                 <?php if(!empty($tindak_lanjut_komite )){?>
+                    <?php foreach($tindak_lanjut_komite as $index){?>
+                    <div class="form-group">
+                    <label for="exampleInputEmail1">Tindak lanjut <?php echo $nama_komite;?></label>
+                       <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $index->tindak_lanjut; ?></textarea>
+                   </div> 
+               <?php }?>
+              <?php }else{?>
+                 <div class="form-group">
+                    <label for="exampleInputEmail1">Tindak lanjut</label>
+                       <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belom mengisi tindak lanjut</textarea>
+                   </div> 
+                <?php }?>
 
 
-        <?php if('3' ==  $jenis_komplain){
-            ?>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="jenis_komplain" value="3" checked disabled>
-                    Perilaku yang melecehkan
-                </label>
-            </div>
-        <?php }else{ ?>
-         <div class="radio">
-            <label>
-                <input type="radio" name="jenis_komplain" value="3" disabled>
-                Perilaku yang melecehkan
-            </label>
-        </div>
-    <?php } ?>
+<div class="form-group">
 
-
-    <?php if('4' ==  $jenis_komplain){
+    <label for="exampleInputEmail1">Jenis komplain: </label>
+    <?php 
+    if('1' ==  $jenis_komplain){
         ?>
         <div class="radio">
             <label>
-                <input type="radio" name="jenis_komplain" value="4" checked disabled>
-                Pelecehan seksual
+                <input type="radio" name="jenis_komplain" value="1" checked disabled>
+                Perilaku yang mengganggu
             </label>
         </div>
     <?php }else{ ?>
-     <div class="radio">
+       <div class="radio">
         <label>
-            <input type="radio" name="jenis_komplain" value="4" disabled>
-            Pelecehan seksual
+            <input type="radio" name="jenis_komplain" value="1" disabled>
+            Perilaku yang mengganggu
         </label>
     </div>
 <?php } ?>
+<?php if('2' ==  $jenis_komplain){
+    ?>
+
+    <div class="radio">
+        <label>
+            <input type="radio" name="jenis_komplain" value="2" checked disabled>
+            Perilaku yang tidak layak
+        </label>
+    </div>
+<?php }else{ ?>
+   <div class="radio">
+    <label>
+        <input type="radio" name="jenis_komplain" value="2" disabled>
+        Perilaku yang tidak layak
+    </label>
+</div>
+<?php } ?>
+
+
+<?php if('3' ==  $jenis_komplain){
+    ?>
+    <div class="radio">
+        <label>
+            <input type="radio" name="jenis_komplain" value="3" checked disabled>
+            Perilaku yang melecehkan
+        </label>
+    </div>
+<?php }else{ ?>
+   <div class="radio">
+    <label>
+        <input type="radio" name="jenis_komplain" value="3" disabled>
+        Perilaku yang melecehkan
+    </label>
+</div>
+<?php } ?>
+
+
+<?php if('4' ==  $jenis_komplain){
+    ?>
+    <div class="radio">
+        <label>
+            <input type="radio" name="jenis_komplain" value="4" checked disabled>
+            Pelecehan seksual
+        </label>
+    </div>
+<?php }else{ ?>
+   <div class="radio">
+    <label>
+        <input type="radio" name="jenis_komplain" value="4" disabled>
+        Pelecehan seksual
+    </label>
+</div>
+<?php } ?>
 
 </div>
-<div class="form-group">
-    <label for="exampleInputEmail1">Tindak lanjut Karumkit</label>
-    <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit" ><?php echo $row->tindak_lanjut_karumkit; ?></textarea>
+<?php if(!empty($row->tindak_lanjut_karumkit)){?>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Tindak lanjut Karumkit</label>
+        <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit" disabled><?php echo $row->tindak_lanjut_karumkit; ?></textarea>
+    </div>
+<?php }else{?>
 
-</div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Tindak lanjut Karumkit</label>
+        <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit"></textarea>
 
+    </div>
+<?php } ?>
 </div>
 
 <div class="box-footer">

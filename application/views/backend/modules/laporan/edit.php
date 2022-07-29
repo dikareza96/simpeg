@@ -253,32 +253,32 @@
                         <?php } ?>
                         
                     </div>
-                    <?php 
+                   <!--  <?php 
                     $nama_komite = '';
-                        if($nama_komite1=='komite_etik') {
+                        if($nama_komite1 =='komite_etik') {
                             $nama_komite = 'Komite Etik & Hukum';
                         }
-                        if ($nama_komite2=='komite_medik') {
+                        if ($nama_komite2 =='komite_medik') {
                             $nama_komite = 'Komite Medik';
                         }
-                        if ($nama_komite3=='komite_tenaga') {
+                        if ($nama_komite3 =='komite_tenaga') {
                             $nama_komite = 'Komite Tenaga Kesehatan Lain';
-                        }if ($nama_komite4=='komite_keperawatan') {
+                        }if ($nama_komite4 =='komite_keperawatan') {
                             $nama_komite = 'Komite Keperawatan';
                         }
-                    ?>
+                    ?> -->
 
                     
                     <?php if(!empty($tindak_lanjut)){
                             ?>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Tindak lanjut <?php echo $nama_komite; ?> </label>
+                        <label for="exampleInputEmail1">Tindak lanjut </label>
                         <textarea class="form-control" rows="3" name="tindak_lanjut_komite" id="tindak_lanjut_komite" disabled=""><?php echo $tindak_lanjut; ?></textarea>
 
                     </div>
                     <?php }else{ ?>
                              <div class="form-group">
-                        <label for="exampleInputEmail1">Tindak lanjut <?php echo $nama_komite; ?></label>
+                        <label for="exampleInputEmail1">Tindak lanjut </label>
                         <textarea class="form-control" rows="3" name="tindak_lanjut_komite" id="tindak_lanjut_komite" ><?php echo $tindak_lanjut; ?></textarea>
 
                     </div>

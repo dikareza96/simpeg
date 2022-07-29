@@ -16,8 +16,8 @@
 
     <!-- Main content -->
     <section class="content">
-        <form role="form" method="POST" enctype="multipart/form-data" action="<?php echo base_url("".$route."/update");?>">
-            
+        <form role="form" method="POST" enctype="multipart/form-data" action="<?php echo base_url("laporan/update");?>">
+
             <div class="row">
                 <!-- left column -->
                 <div class="col-md-12">
@@ -25,83 +25,181 @@
                     <div class="box box-primary">
                         <!-- <div class="box-header with-border">
               <h3 class="box-title">New Post </h3>
-            </div> -->
-                        <!-- /.box-header -->
-                        <!-- form start -->
-                        <?php foreach ($laporan as $row) {
-                                        ?>
-                                        <input id="id" name="id" required="required" type="hidden" value="<?php echo $row->id; ?>"> 
-                        <div class="box-body">
-    
-                           
+          </div> -->
+          <!-- /.box-header -->
+          <!-- form start -->
+          <?php foreach ($laporan as $row) {
 
-                            <div class="form-group">
-                                <label class="exampleInputFile">Pihak yang dilaporkan</label>
-                                <input type="text" class="form-control" id="tersangka" name="tempat_kejadian" placeholder="Enter role name" value="<?php echo $row->tersangka; ?>" disabled>
-                            </div>
-                             <div class="form-group">
-                                <label class="exampleInputFile">Waktu kejadian</label>
-                                <input type="text" class="form-control" id="waktu_kejadian" name="waktu_kejadian" placeholder="Enter role name" value="<?php echo $row->waktu_kejadian; ?>" disabled>
-                            </div>
-                             <div class="form-group">
-                                <label class="exampleInputFile">Tempat kejadian</label>
-                                <input type="text" class="form-control" id="tersangka" name="tempat_kejadian" placeholder="Enter role name" value="<?php echo $row->tersangka; ?>" disabled>
-                            </div>
-                          <div class="form-group">
-                            <label for="exampleInputEmail1">Detail laporan</label>
-                            <textarea class="form-control" rows="3" name="detail_laporan" id="waktu_kejadian" disabled><?php echo $row->detail_laporan; ?></textarea>
-                            
-                        </div>
+            ?>
 
-                             <div class="form-group">
-                                <label for="exampleInputEmail1">Bukti Foto / video</label>
-                                <input type="file" class="form-control" id="image" name="image" disabled>
-                                <img class="form-control" style="width: 200px;height: 200px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
-                            </div>
-                           
-                              
+            <input id="id" name="id" required="required" type="hidden" value="<?php echo $row->id; ?>"> 
+            <div class="box-body">
 
-                            <div class="form-group">
-                                <label class="exampleInputFile">Jenis laporan</label>
-                                <input type="text" class="form-control" id="jenis_laporan" name="jenis_laporan" placeholder="" value="<?php echo $row->jenis_laporan; ?>" disabled>
-                            </div>
-                             <label for="exampleInputEmail1">Tindak lanjut Komite</label>
-                            <textarea class="form-control" rows="3" name="tindak_lanjut_komite" id="tindak_lanjut_komite" disabled><?php echo $row->tindak_lanjut_komite; ?></textarea>
 
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Status: </label>
-                                <br>
-                                <input type="radio" class="minimal" name="" value="">
-                                <label for="exampleInputEmail1">Status selesai</label>
-                            
-                            
-                            </div>
-                            
-                            
-                        </div>
 
-                        <div class="box-footer">
-                            <a href="<?php echo base_url("laporan/index")?>" type="button" class="btn btn-default ">Back</a>
-                            <button type="submit" class="btn btn-info pull-right">Submit</button>
-                        </div>
-                        <!-- /.box-body -->
- 
-         <?php } ?>
-
-                    </div>
-                    <!-- /.box -->
+                <div class="form-group">
+                    <label class="exampleInputFile">Pihak yang dilaporkan</label>
+                    <input type="text" class="form-control" id="tersangka" name="tempat_kejadian" placeholder="Enter role name" value="<?php echo $row->tersangka; ?>" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="exampleInputFile">Waktu kejadian</label>
+                    <input type="text" class="form-control" id="waktu_kejadian" name="waktu_kejadian" placeholder="Enter role name" value="<?php echo $row->waktu_kejadian; ?>" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="exampleInputFile">Tempat kejadian</label>
+                    <input type="text" class="form-control" id="tersangka" name="tempat_kejadian" placeholder="Enter role name" value="<?php echo $row->tersangka; ?>" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Detail laporan</label>
+                    <textarea class="form-control" rows="3" name="detail_laporan" id="waktu_kejadian" disabled><?php echo $row->detail_laporan; ?></textarea>
 
                 </div>
-                <!--/.col (left) -->
-                <!-- right column -->
-               
-                <!--/.col (right) -->
-            </div>
-            <!-- /.row -->
-        </form>
-    </section>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">status</label>
+                    <textarea class="form-control" rows="3" name="detail_laporan" id="waktu_kejadian" disabled><?php echo $row->status; ?></textarea>
 
-    <!-- /.content -->
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Bukti Foto / video</label>
+                    <input type="file" class="form-control" id="image" name="image" disabled>
+                    <img class="form-control" style="width: 200px;height: 200px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
+                </div>
+                <?php
+                if (isset($jenis_komplain) ? $jenis_komplain:'') {
+                    $jenis_komplain;
+                }else{
+                    $jenis_komplain = '';
+                }
+                if (isset($jenis_laporan) ? $jenis_laporan:'') {
+                    $jenis_laporan;
+                }else{
+                    $jenis_laporan = '';
+                }
+                if (isset($tindak_lanjut) ? $tindak_lanjut:'') {
+                    $tindak_lanjut;
+                }else{
+                    $tindak_lanjut = '';
+                }
+                ?>
+
+
+                <div class="form-group">
+                    <label class="exampleInputFile">Jenis laporan</label>
+                    <input type="text" class="form-control" id="jenis_laporan" name="jenis_laporan" placeholder="" value="<?php echo $jenis_laporan; ?>" disabled>
+                </div>
+
+                 <?php  
+                        // $nama_komite1 = '';
+                        // $nama_komite2 = '';
+                        // $nama_komite3 = '';
+                        // $nama_komite4 = '';
+                        // $etik = '';
+                        // $keperawatan = '';
+                        // $medik = '';
+                        // $tenaga = '';
+                // if(!empty($nama_komite1)){
+                //     if($nama_komite1 == 'komite_etik') {
+                //         $etik = 'Komite Etik & Hukum';
+                //     }
+                // }else{
+                //     $etik = '';
+                // }
+                // if(!empty($nama_komite2)){
+                //     if($nama_komite2 == 'komite_keperawatan') {
+                //         $keperawatan = 'Komite Keperawatan';
+                //     }
+                // }else{
+                //     $keperawatan = '';
+                // }
+                // if(!empty($nama_komite3)){
+                //     if($nama_komite3 == 'komite_medik') {
+                //         $medik = 'Komite Medik';
+                //     }
+                // }else{
+                //     $medik = '';
+                // }
+                // if(!empty($nama_komite4)){
+                //     if($nama_komite4 == 'komite_tenaga') {
+                //         $tenaga = 'Komite Tenaga Kesehatan Lain';
+                //     }
+                // }else{
+                //     $tenaga = '';
+                // }
+                    // if(!empty($tindak_lanjut1)){
+                    //     $tindak_lanjut1 = '';
+                    // }if(!empty($tindak_lanjut2)){
+                    //     $tindak_lanjut2 = '';
+                    // }if(!empty($tindak_lanjut3)){
+                    //     $tindak_lanjut3 = '';
+                    // }if(!empty($tindak_lanjut4)){
+                    //     $tindak_lanjut4 = '';
+                    // }
+
+                 foreach($tindak_lanjut_komite as $get_nama){
+                          if($get_nama->id_komite == 'komite_etik' ){
+                                  $nama_komite = 'Komite Etik & Hukum';
+                           }if($get_nama->id_komite == 'komite_keperawatan' ){
+                                  $nama_komite = 'Komite Etik & Hukum';
+                           }if($get_nama->id_komite == 'komite_medik' ){
+                                  $nama_komite = 'Komite Medik';
+                           }if($get_nama->id_komite == 'komite_tenaga' ){
+                                  $nama_komite = 'Komite Tenaga Kesehatan Lain';
+                                }
+                    }
+                 ?> 
+ 
+             <?php foreach($tindak_lanjut_komite as $index){
+              ?>  
+                    <div class="form-group">
+                    <label for="exampleInputEmail1">Tindak lanjut <?php echo $nama_komite;?></label>
+                       <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $index->tindak_lanjut; ?></textarea>
+                   </div> 
+              <?php }?>
+
+                   <?php if(!empty($row->status == '3')){?>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Status: </label>
+                        <br>
+                        <input type="radio" class="minimal" name="status" value="3" checked="" disabled="">
+                        <label for="exampleInputEmail1">Status selesai</label>
+                    </div>
+                  <?php }else{?>
+                     <div class="form-group">
+                          <label for="exampleInputEmail1">Status: </label>
+                          <br>
+                          <input type="radio" class="minimal" name="status" value="3">
+                          <label for="exampleInputEmail1">Status selesai</label>
+                      </div>
+                  <?php }?>
+
+
+
+
+
+<div class="box-footer">
+    <a href="<?php echo base_url("laporan/index")?>" type="button" class="btn btn-default ">Back</a>
+    <button type="submit" class="btn btn-info pull-right">Submit</button>
+</div>
+<!-- /.box-body -->
+</div>
+
+
+<?php }?>
+</div>
+<!-- /.box -->
+
+</div>
+<!--/.col (left) -->
+<!-- right column -->
+
+<!--/.col (right) -->
+</div>
+<!-- /.row -->
+</form>
+</section>
+
+<!-- /.content -->
 </div>
 
 <!-- jQuery 3 -->
@@ -123,14 +221,14 @@
 
         CKEDITOR.replace('editor2')
     //bootstrap WYSIHTML5 - text editor
-        $('.textarea').wysihtml5()
+    $('.textarea').wysihtml5()
 
-       
-        
+
+
     //Initialize Select2 Elements
     $('.select2').select2()
 
-    });
+});
     //iCheck for checkbox and radio inputs
     // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
     //   checkboxClass: 'icheckbox_minimal-blue',

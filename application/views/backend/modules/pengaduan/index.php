@@ -58,9 +58,7 @@
                   <td class="text-center"><?php echo str_replace($en, $id, strftime("%d %B %Y", strtotime($row->waktu_kejadian)));?></td>
                   <td class="text-center"><?php echo $row->tempat_kejadian; ?></td>
                   <?php
-                  if(0 ==  $row->status){
-                    
-                ?> 
+                  if(0 ==  $row->status){?> 
                 <td class="text-center"><a href="" class="btn btn-info btn-sm btn-flat" >
                           Aduan diterima
                          </a></td>
@@ -70,7 +68,7 @@
                           Aduan diteruskan
                          </a></td>
                   <?php } elseif(2 ==  $row->status) {?>
-                     <td class="text-center"><a href="" class="btn btn- btn-sm btn-flat" >
+                     <td class="text-center"><a href="" class="btn btn bg-purple btn-sm btn-flat" >
                           Aduan di proses
                          </a></td>
                   <?php }elseif(3 ==  $row->status) { ?>

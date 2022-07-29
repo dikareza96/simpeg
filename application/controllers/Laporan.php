@@ -26,13 +26,13 @@ class Laporan extends CI_Controller {
 		if($this->session->userdata('level')=='karumkit' || $this->session->userdata('level')=='admin'){
 			$module = $this->module;
 
-			$masuk = $this->db->query("SELECT * FROM pengaduan");
+			$masuk = $this->db->query("SELECT * FROM pengaduan WHERE status = 0");
 			$data['masuk'] = $masuk->num_rows();
 
-			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 1");
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 2");
 			$data['proses'] = $proses->num_rows();
 
-			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 2');
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3');
 			$data['selesai'] = $selesai->num_rows();
 
 
@@ -41,6 +41,7 @@ class Laporan extends CI_Controller {
 			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at,b.name as korban
 				FROM pengaduan a 
 				INNER JOIN user b  ON a.user_pelapor = b.id
+				-- WHERE status <> 3
 				")->result();
 			// $data[$module] = $this->Resource->show($this->table)->result();
 			$this->load->view('backend/template/header');
@@ -54,13 +55,14 @@ class Laporan extends CI_Controller {
 			$masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
 				FROM pengaduan a 
 				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
-				where c.id_komite = '$get_user_level'");
+				where c.id_komite = '$get_user_level'
+				and a.status = '1'");
 			$data['masuk'] = $masuk->num_rows();
 
-			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 1");
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 2");
 			$data['proses'] = $proses->num_rows();
 
-			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 2');
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3');
 			$data['selesai'] = $selesai->num_rows();
 			
 			$data['route'] = $this->module;
@@ -68,7 +70,8 @@ class Laporan extends CI_Controller {
 				FROM pengaduan a 
 				INNER JOIN user b  ON a.user_pelapor = b.id
 				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
-				where c.id_komite = '$get_user_level'")->result();
+				where c.id_komite = '$get_user_level'
+				AND a.status = '1'")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
 			$this->load->view('backend/modules/'.$module.'/index',$data);
@@ -125,7 +128,7 @@ class Laporan extends CI_Controller {
 			$this->load->view('backend/template/sidebar');
 			$this->load->view('backend/modules/'.$module.'/index',$data);
 			$this->load->view('backend/template/footer');
-		}elseif($this->session->userdata('level')=='komite_'){
+		}elseif($this->session->userdata('level')=='komite_keperawatan'){
 			$get_user_level = $this->session->userdata('level');
 			$module = $this->module;
 
@@ -252,6 +255,21 @@ class Laporan extends CI_Controller {
 			$data['komite4'] =  $rows[3]['id_komite'];
          	// $komite4 =  $rows[3]['id_komite'];
 		}
+		$list_tindak_lanjut = $this->db->query("SELECT
+			a.id_pengaduan,a.tindak_lanjut,a.id_komite, a.created_at
+
+			FROM
+			tindak_lanjut a
+			INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan  = '$id'
+			GROUP BY
+			id_komite ASC")->result_array();
+
+		
+		foreach ($list_tindak_lanjut as $key => $val) {
+			$vote3 []= $val;
+		}
+		
 		// TINDAK LANJUT
 		$tindak_lanjut = $this->db->query("SELECT a.jenis_komplain,a.jenis_laporan,a.tindak_lanjut
 			FROM tindak_lanjut a
@@ -272,6 +290,21 @@ class Laporan extends CI_Controller {
 			$data['tindak_lanjut'] = $tindak[0]['tindak_lanjut'];
 			// $tindaks = $tindak[0]['tindak_lanjut'];
 		}
+		// nama komite parse
+		if(!empty($vote3[0]['id_komite'])){
+			$data['nama_komite1'] = $vote3[0]['id_komite'];
+			$etik = $vote3[0]['id_komite'];
+		}if(!empty($vote3[1]['id_komite'])){
+			$data['nama_komite2'] = $vote3[1]['id_komite'];
+			$keperawatan = $vote3[1]['id_komite'];
+		}if(!empty($vote3[2]['id_komite'])){
+			$data['nama_komite3'] = $vote3[2]['id_komite'];
+			$medik = $vote3[2]['id_komite'];
+		}if(!empty($vote3[3]['id_komite'])){
+			$data['nama_komite4'] = $vote3[3]['id_komite'];
+			$tenaga = $vote3[3]['id_komite'];
+		}
+
 		
 		
 		 // var_dump($jenis_komplain,$tindaks);
@@ -311,6 +344,7 @@ class Laporan extends CI_Controller {
 		$module = $this->module;
 		$data['route'] = $this->table;
 		$where = array('id' => $id);
+
 		$vote_jenis_laporan = $this->db->query("SELECT
 			a.jenis_laporan,
 			COUNT(a.jenis_laporan) AS vote_jenis_laporan 
@@ -345,6 +379,13 @@ class Laporan extends CI_Controller {
 			where a.id_pengaduan  = '$id'
 			GROUP BY
 			id_komite ASC")->result_array();
+		$data['tindak_lanjut_komite'] = $this->db->query("SELECT
+			*
+			FROM
+			tindak_lanjut 
+			where id_pengaduan  = '$id'
+			GROUP BY
+			id_komite ASC")->result();
 
 		foreach ($vote_jenis_laporan as $key => $val) {
 			$vote1 []= $val;
@@ -368,17 +409,24 @@ class Laporan extends CI_Controller {
 		}if(!empty($vote3[0]['tindak_lanjut'])){
 
 			$data['tindak_lanjut1'] = $vote3[0]['tindak_lanjut'];
+			$tindak1 = $vote3[0]['tindak_lanjut'];
 			
 		}if(!empty($vote3[1]['tindak_lanjut'])){
 
 			$data['tindak_lanjut2'] = $vote3[1]['tindak_lanjut'];
+			$tindak2 = $vote3[1]['tindak_lanjut'];
+
 			
 		}if(!empty($vote3[2]['tindak_lanjut'])){
 
 			$data['tindak_lanjut3'] = $vote3[2]['tindak_lanjut'];
+			$tindak3 = $vote3[2]['tindak_lanjut'];
+
 			
 		}if(!empty($vote3[3]['tindak_lanjut'])){
 			$data['tindak_lanjut4'] = $vote3[3]['tindak_lanjut'];
+			$tindak4 = $vote3[3]['tindak_lanjut'];
+
 		}
 		// nama komite parse
 		if(!empty($vote3[0]['id_komite'])){
@@ -393,11 +441,10 @@ class Laporan extends CI_Controller {
 		}if(!empty($vote3[3]['id_komite'])){
 			$data['nama_komite4'] = $vote3[3]['id_komite'];
 			$tenaga = $vote3[3]['id_komite'];
-
-			
-
 		}
-		// var_dump($etik, $keperawatan, $medik, $tenaga);
+
+		  // var_dump($medik);
+		//var_dump($etik, $keperawatan, $medik, $tenaga);
 		$data[$module] = $this->Resource->edit($where,$this->table)->result();
 		$this->load->view('backend/template/header');
 		$this->load->view('backend/template/sidebar');
@@ -408,6 +455,107 @@ class Laporan extends CI_Controller {
 		$module = $this->module;
 		$data['route'] = $this->table;
 		$where = array('id' => $id);
+		
+		$vote_jenis_laporan = $this->db->query("SELECT
+			a.jenis_laporan,
+			COUNT(a.jenis_laporan) AS vote_jenis_laporan 
+			FROM
+			tindak_lanjut a
+			INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan  = '$id'
+			GROUP BY 
+			jenis_laporan
+			ORDER BY 
+			vote_jenis_laporan DESC
+			LIMIT 1")->result_array();
+		$vote_jenis_komplain = $this->db->query("SELECT
+			a.jenis_komplain,
+			COUNT(a.jenis_komplain) AS vote_jenis_komplain
+
+			FROM
+			tindak_lanjut a
+			INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan  = '$id'
+			GROUP BY 
+			jenis_komplain
+			ORDER BY 
+			vote_jenis_komplain DESC
+			LIMIT 1")->result_array();
+		$data['tindak_lanjut_komite'] = $this->db->query("SELECT
+			*
+			FROM
+			tindak_lanjut 
+			where id_pengaduan  = '$id'
+			GROUP BY
+			id_komite ASC")->result();
+		$list_tindak_lanjut = $this->db->query("SELECT
+			a.id_pengaduan,a.tindak_lanjut,a.id_komite, a.created_at
+			FROM
+			tindak_lanjut a
+			-- INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan  = '$id'
+			GROUP BY
+			id_komite ASC")->result_array();
+
+		foreach ($vote_jenis_laporan as $key => $val) {
+			$vote1 []= $val;
+		}
+		foreach ($vote_jenis_komplain as $key => $val) {
+			$vote2 []= $val;
+		}
+		foreach ($list_tindak_lanjut as $key => $val) {
+			$vote3 []= $val;
+		}
+		foreach ($list_tindak_lanjut as $key => $val) {
+			$vote4 []= $val;
+		}
+		if(!empty($vote1[0]['jenis_laporan'])){
+
+			$data['jenis_laporan'] = $vote1[0]['jenis_laporan'];
+		}if(!empty($vote2[0]['jenis_komplain'])){
+
+			$data['jenis_komplain'] = $vote2[0]['jenis_komplain'];
+			// $jenis_komplain = $tindak[0]['jenis_komplain'];
+		}
+
+		//list_tindak_lanjut
+		if(!empty($vote3[0]['tindak_lanjut'])){
+
+			$data['tindak_lanjut1'] = $vote3[0]['tindak_lanjut'];
+			$tindak1 = $vote3[0]['tindak_lanjut'];
+			
+		}if(!empty($vote3[1]['tindak_lanjut'])){
+
+			$data['tindak_lanjut2'] = $vote3[1]['tindak_lanjut'];
+			$tindak2 = $vote3[1]['tindak_lanjut'];
+
+			
+		}if(!empty($vote3[2]['tindak_lanjut'])){
+
+			$data['tindak_lanjut3'] = $vote3[2]['tindak_lanjut'];
+			$tindak3 = $vote3[2]['tindak_lanjut'];
+
+			
+		}if(!empty($vote3[3]['tindak_lanjut'])){
+			$data['tindak_lanjut4'] = $vote3[3]['tindak_lanjut'];
+			$tindak4 = $vote3[3]['tindak_lanjut'];
+
+		}
+		// nama komite parse
+		if(!empty($vote3[0]['id_komite'])){
+			$data['nama_komite1'] = $vote3[0]['id_komite'];
+			$etik = $vote3[0]['id_komite'];
+		}if(!empty($vote3[1]['id_komite'])){
+			$data['nama_komite2'] = $vote3[1]['id_komite'];
+			$keperawatan = $vote3[1]['id_komite'];
+		}if(!empty($vote3[2]['id_komite'])){
+			$data['nama_komite3'] = $vote3[2]['id_komite'];
+			$medik = $vote3[2]['id_komite'];
+		}if(!empty($vote3[3]['id_komite'])){
+			$data['nama_komite4'] = $vote3[3]['id_komite'];
+			$tenaga = $vote3[3]['id_komite'];
+		}
+		// var_dump($etik);
 		$data[$module] = $this->Resource->edit($where,$this->table)->result();
 		$this->load->view('backend/template/header');
 		$this->load->view('backend/template/sidebar');
@@ -433,6 +581,8 @@ class Laporan extends CI_Controller {
 		$jenis_laporan = $this->input->post('jenis_laporan');
 		$jenis_komplain = $this->input->post('jenis_komplain');
 		$tindak_lanjut_komite = $this->input->post('tindak_lanjut_komite');
+		$tindak_lanjut_karumkit = $this->input->post('tindak_lanjut_karumkit');
+		$status = $this->input->post('status');
 		if(!empty($check)){
 			foreach ($check as $row) {
 				$data = array(
@@ -442,6 +592,18 @@ class Laporan extends CI_Controller {
 				);
 				$this->Resource->komite(array('id_pengaduan'=> $id,'id_komite' => $row  ));
 			}
+			
+			
+				$data = array(
+					'status' => "1",
+					
+
+				);
+				$where = array(
+					'id' => $id
+				);
+				$this->Resource->update($where,$data,'pengaduan');
+
 			redirect('laporan/index');
 		}elseif(!empty($jenis_laporan)){
 			
@@ -455,8 +617,47 @@ class Laporan extends CI_Controller {
 			);
 			$this->Resource->store($data,'tindak_lanjut' );
 
+			$update_status = array(
+					'status' => "2",
+
+				);
+				$where = array(
+					'id' => $id
+				);
+				$this->Resource->update($where,$update_status,'pengaduan');
+
 			redirect('laporan/index');
 
+		}elseif(!empty($tindak_lanjut_karumkit)){
+		
+			
+		
+				$data = array(
+					'tindak_lanjut_karumkit' => $tindak_lanjut_karumkit,
+					
+
+				);
+				$where = array(
+					'id' => $id
+				);
+				$this->Resource->update($where,$data,'pengaduan');
+				redirect('laporan/index');
+			
+		}elseif(!empty($status)){
+		
+			
+		
+				$data = array(
+					'status' => $status,
+					
+
+				);
+				$where = array(
+					'id' => $id
+				);
+				$this->Resource->update($where,$data,'pengaduan');
+				redirect('laporan/index');
+			
 		}else{
 
 			$data = array(
@@ -482,6 +683,8 @@ class Laporan extends CI_Controller {
 			$this->Resource->update($where,$data,$this->table);
 			redirect('laporan/index');
 		}
+
+		
 
 
 	}

@@ -1,0 +1,102 @@
+ if($row->id_komite == 'komite_etik' ){
+                            $nama_komite == 'Komite Etik & Hukum';
+                     }if($row->id_komite == 'komite_keperawatan' ){
+                            $nama_komite == 'Komite Etik & Hukum';
+                     }if($row->id_komite == 'komite_medik' ){
+                            $nama_komite == 'Komite Medik';
+                     }if($row->id_komite == 'komite_tenaga' ){
+                            $nama_komite == 'Komite Tenaga Kesehatan Lain';
+                     }
+
+<?php  
+                        // $nama_komite1 = '';
+                        // $nama_komite2 = '';
+                        // $nama_komite3 = '';
+                        // $nama_komite4 = '';
+                        // $etik = '';
+                        // $keperawatan = '';
+                        // $medik = '';
+                        // $tenaga = '';
+                // if(!empty($nama_komite1)){
+                //     if($nama_komite1 == 'komite_etik') {
+                //         $etik = 'Komite Etik & Hukum';
+                //     }
+                // }else{
+                //     $etik = '';
+                // }
+                // if(!empty($nama_komite2)){
+                //     if($nama_komite2 == 'komite_keperawatan') {
+                //         $keperawatan = 'Komite Keperawatan';
+                //     }
+                // }else{
+                //     $keperawatan = '';
+                // }
+                // if(!empty($nama_komite3)){
+                //     if($nama_komite3 == 'komite_medik') {
+                //         $medik = 'Komite Medik';
+                //     }
+                // }else{
+                //     $medik = '';
+                // }
+                // if(!empty($nama_komite4)){
+                //     if($nama_komite4 == 'komite_tenaga') {
+                //         $tenaga = 'Komite Tenaga Kesehatan Lain';
+                //     }
+                // }else{
+                //     $tenaga = '';
+                // }
+                    // if(!empty($tindak_lanjut1)){
+                    //     $tindak_lanjut1 = '';
+                    // }if(!empty($tindak_lanjut2)){
+                    //     $tindak_lanjut2 = '';
+                    // }if(!empty($tindak_lanjut3)){
+                    //     $tindak_lanjut3 = '';
+                    // }if(!empty($tindak_lanjut4)){
+                    //     $tindak_lanjut4 = '';
+                    // }
+                 ?> 
+
+<?php if(!empty($etik)){?>
+                    <div class="form-group">
+                     <label for="exampleInputEmail1">Tindak lanjut <?php echo $etik; ?></label>
+                     <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $tindak_lanjut1; ?></textarea>
+                 </div>
+             <?php }else{?>
+                <div class="form-group">
+                 <label for="exampleInputEmail1">Tindak lanjut</label>
+                 <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belum mengisi tindak lanjut</textarea>
+             </div>
+             <?php }?>
+             <?php if(!empty($keperawatan)){?>
+                <div class="form-group">
+                 <label for="exampleInputEmail1">Tindak lanjut <?php echo $keperawatan; ?></label>
+                 <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $tindak_lanjut2; ?></textarea>
+             </div>
+         <?php }else{?>
+            <div class="form-group">
+             <label for="exampleInputEmail1">Tindak lanjut</label>
+             <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belum mengisi tindak lanjut</textarea>
+         </div>
+     <?php }?>
+         <?php if(!empty($medik)){?>
+            <div class="form-group">
+             <label for="exampleInputEmail1">Tindak lanjut <?php echo $medik; ?></label>
+             <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $tindak_lanjut3; ?></textarea>
+         </div>
+        <?php }else{?>
+            <div class="form-group">
+             <label for="exampleInputEmail1">Tindak lanjut</label>
+             <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belum mengisi tindak lanjut</textarea>
+         </div>
+        <?php }?>
+<?php if(!empty($tindak_lanjut4)){?>
+    <div class="form-group">
+     <label for="exampleInputEmail1">Tindak lanjut <?php echo $tenaga; ?></label>
+     <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $tindak_lanjut4; ?></textarea>
+ </div>
+<?php }else{?>
+    <div class="form-group">
+     <label for="exampleInputEmail1">Tindak lanjut</label>
+     <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belum mengisi tindak lanjut</textarea>
+ </div>
+<?php }?>
