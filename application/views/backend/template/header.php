@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>SIMPEG | Dashboard</title>
+    <title>SIDAMARI | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -49,9 +49,9 @@
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>SPEG</b></span>
+      <span class="logo-mini"><b>SDMRI</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>SIMPEG </b></span>
+      <span class="logo-lg"><b>SIDAMARI </b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

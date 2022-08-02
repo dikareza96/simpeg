@@ -68,23 +68,30 @@
                 <a href="<?php echo base_url("".$route."/index")?>" type="button" class="btn btn-default ">Back</a>
                 <button type="submit" class="btn btn-info pull-right">Submit</button>
             </div>
-            <!-- /.box-body -->
+            <?php if($this->session->flashdata('error')){?>
+                <div class="alert alert-danger alert-dismissible" id="gagal_popup">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i> Warning</h4>
+                    Gagal menyimpan, data anda kurang lengkap!
+                </div>
+            <?php }?>
+                <!-- /.box-body -->
 
 
 
 
 
+
+            </div>
+            <!-- /.box -->
 
         </div>
-        <!-- /.box -->
+        <!--/.col (left) -->
+        <!-- right column -->
 
+        <!--/.col (right) -->
     </div>
-    <!--/.col (left) -->
-    <!-- right column -->
-
-    <!--/.col (right) -->
-</div>
-<!-- /.row -->
+    <!-- /.row -->
 </form>
 </section>
 
@@ -142,7 +149,15 @@
     $('#waktu_kejadian').datepicker({
       autoclose: true,
       format: 'yyyy-mm-dd'
-    })
+  });
+    //  document.getElementById('gagal_popup').innerHTML='<b>Data kurang lengkap, mohon semua kolom diisi!!</b>'; 
+    // setTimeout(function() {document.getElementById('gagal_popup').innerHTML='';},3000);
+    setTimeout(function() {
+      $('#gagal_popup').hide()
+    }, 4000);
+
+
+
 })
 </script>
 

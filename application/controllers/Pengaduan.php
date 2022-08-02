@@ -65,6 +65,7 @@ class Pengaduan extends CI_Controller {
 	{
 		$module = $this->table;
 		$data['route'] = $this->table;
+		$data['status'] = '';
 		$this->load->view('backend/template/header');
 		$this->load->view('backend/template/sidebar');
 		$this->load->view('backend/modules/'.$module.'/create',$data);
@@ -79,21 +80,26 @@ class Pengaduan extends CI_Controller {
 		$this->form_validation->set_rules('waktu_kejadian', 'Waktu kejadian', 'required');
 		$this->form_validation->set_rules('tempat_kejadian', 'Tempat kejadian', 'required');
 		$this->form_validation->set_rules('detail_laporan', 'Detail Laporan', 'required');
+		// $this->form_validation->set_rules('image', 'Foto/Video', 'required');
+
 
 		$data['status']="sukses";
 		$data['error']="";
 		$this->load->library('upload');
 		$nmfile = "file_".time(); 
 		$config['upload_path'] = './assets/uploads/'; 
-		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp|mp4|mkv'; 
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp|mp4|mkv|webm|flv|ogg|ogv|avi|mov|wmv|m4p|mpeg|3gp'; 
 		$config['max_size']             = 2000;
 		$config['max_width']            = 2048;
 		$config['max_height']           = 2048;
 		$config['file_name'] = $nmfile;
 		$this->upload->initialize($config);
-		if ($this->form_validation->run() == FALSE){
+		if ($this->form_validation->run()== false){
 			$data["status"]="error";
-			$data["error"]=validation_errors();				
+			$data["error"]= validation_errors();
+			$this->session->set_flashdata('error', 'Gagal menyimpan');
+			redirect(''.$module.'/create');			
+
 		}else{
 			if(isset($_FILES['image'])){
 				if($_FILES['image']['name'])
@@ -103,8 +109,10 @@ class Pengaduan extends CI_Controller {
 						$gbr = $this->upload->data();
 
 					} 
+
 				}
 			}
+
 
 		}
 		if($data["status"]=="sukses"){
@@ -126,11 +134,14 @@ class Pengaduan extends CI_Controller {
 				'file' =>$gbr['file_name']
 
 			);
-			$this->Resource->store($data,$this->table);  
+			$this->Resource->store($data,$this->table);
+			$this->session->set_flashdata('sukses', 'Sukses menyimpan');
+			redirect(''.$module.'/index');	
+
 		}
 		
 
-		redirect(''.$module.'/index');
+		
 	}
 	function edit($id){ 
 		$module = $this->table;
@@ -148,7 +159,7 @@ class Pengaduan extends CI_Controller {
 		$this->load->library('upload');
 		$nmfile = "file_".time(); 
 		$config['upload_path'] = './assets/uploads/'; 
-		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; 
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp|mp4|mkv|webm|flv|ogg|ogv|avi|mov|wmv|m4p|mpeg|3gp'; 
 		$config['max_size']             = 5000;
 		$config['max_width']            = 2048;
 		$config['max_height']           = 2048;
@@ -156,14 +167,14 @@ class Pengaduan extends CI_Controller {
 		$this->upload->initialize($config);
 
 		$id = $this->input->post('id');
-		$content = $this->input->post('content');
-		$name = $this->input->post('name');
-		$profesi = $this->input->post('profesi');
+		$tersangka = $this->input->post('tersangka');
+		$waktu_kejadian = $this->input->post('waktu_kejadian');
+		$tempat_kejadian = $this->input->post('tempat_kejadian');
 
 		$data = array(
-			'content' => $content,
-			'name' => $name,
-			'profesi' => $profesi,
+			'tersangka' => $tersangka,
+			'waktu_kejadian' => $waktu_kejadian,
+			'tempat_kejadian' => $tempat_kejadian,
 
 		);
 		if($_FILES['image']['name'])
@@ -172,7 +183,7 @@ class Pengaduan extends CI_Controller {
 			{
 
 				$gbr = $this->upload->data();
-				$data['img'] = $gbr['file_name'];
+				$data['file'] = $gbr['file_name'];
 				
 				
 			} 

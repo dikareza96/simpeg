@@ -152,13 +152,13 @@
                  <?php if(!empty($tindak_lanjut_komite )){?>
                     <?php foreach($tindak_lanjut_komite as $index){?>
                     <div class="form-group">
-                    <label for="exampleInputEmail1">Tindak lanjut <?php echo $nama_komite;?></label>
+                    <label for="exampleInputEmail1">Evaluasi dan monitoring <?php echo $nama_komite;?></label>
                        <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $index->tindak_lanjut; ?></textarea>
                    </div> 
                <?php }?>
               <?php }else{?>
                  <div class="form-group">
-                    <label for="exampleInputEmail1">Tindak lanjut</label>
+                    <label for="exampleInputEmail1">Evaluasi dan monitoring</label>
                        <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belom mengisi tindak lanjut</textarea>
                    </div> 
                 <?php }?>
@@ -241,13 +241,13 @@
 </div>
 <?php if(!empty($row->tindak_lanjut_karumkit)){?>
     <div class="form-group">
-        <label for="exampleInputEmail1">Tindak lanjut Karumkit</label>
+        <label for="exampleInputEmail1">Keputusan Karumkit</label>
         <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit" disabled><?php echo $row->tindak_lanjut_karumkit; ?></textarea>
     </div>
 <?php }else{?>
 
     <div class="form-group">
-        <label for="exampleInputEmail1">Tindak lanjut Karumkit</label>
+        <label for="exampleInputEmail1">Keputusan Karumkit</label>
         <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit"></textarea>
 
     </div>

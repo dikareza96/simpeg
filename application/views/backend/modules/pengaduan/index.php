@@ -7,6 +7,13 @@
         Pengaduan Perilaku Pegawai
         
       </h1> 
+      <?php if($this->session->flashdata('sukses')){?>
+       <div class="alert alert-success  alert-dismissible" id="sukses_popup">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i> Warning</h4>
+                    Data sukses terimpan!
+                </div>
+      <?php }?>
     
     </section>
  <!-- Main content -->
@@ -15,7 +22,9 @@
         <div class="col-xs-12">
           <div class="box box-success">
             <div class="box-header">
+
               <h3 class="box-title">Daftar Pengaduan</h3>
+
                <div class="box-tools pull-right">
               <!--   <?php if($profile )?> -->
               
@@ -24,6 +33,7 @@
                           Buat Pengaduan
                     </a>
                  </div>
+
                
             </div>
 
@@ -59,9 +69,9 @@
                   <td class="text-center"><?php echo $row->tempat_kejadian; ?></td>
                   <?php
                   if(0 ==  $row->status){?> 
-                <td class="text-center"><a href="" class="btn btn-info btn-sm btn-flat" >
-                          Aduan diterima
-                         </a></td>
+                  <td class="text-center"><a href="" class="btn btn-info btn-sm btn-flat" >
+                            Aduan diterima
+                           </a></td>
               
                   <?php }elseif(1 ==  $row->status) {?>
                     <td class="text-center"><a href="" class="btn btn-warning btn-sm btn-flat" >
@@ -125,7 +135,11 @@
 <script>
  $(function () {
     
-    $('#table').DataTable()
+    $('#table').DataTable();
+    
+    setTimeout(function() {
+      $('#sukses_popup').hide()
+    }, 4000);
   })
 </script>
     

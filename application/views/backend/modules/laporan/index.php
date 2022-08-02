@@ -94,9 +94,9 @@
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="<?php echo base_url("".$route."/edit/$row->id") ?>">1. Kirim</a></li>
-                  <li><a href="<?php echo base_url("".$route."/tindak_lanjut/$row->id") ?>">2. Tindak lanjut</a></li>
-                  <li><a href="<?php echo base_url("".$route."/tutup_aduan/$row->id") ?>">3. Tutup kasus</a></li>
+                  <!-- <li><a href="<?php echo base_url("".$route."/edit/$row->id") ?>">1. Kirim</a></li> -->
+                  <li><a href="<?php echo base_url("".$route."/tindak_lanjut/$row->id") ?>">1. Keputusan</a></li>
+                  <li><a href="<?php echo base_url("".$route."/tutup_aduan/$row->id") ?>">2. Tutup kasus</a></li>
                   
                 </ul>
               </div>

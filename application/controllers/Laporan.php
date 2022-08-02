@@ -180,7 +180,7 @@ class Laporan extends CI_Controller {
 		$this->load->library('upload');
 		$nmfile = "file_".time(); 
 		$config['upload_path'] = './assets/uploads/'; 
-		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; 
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp|mp4|mkv|webm|flv|ogg|ogv|avi|mov|wmv|m4p|mpeg|3gp'; 
 		$config['max_size']             = 2000;
 		$config['max_width']            = 2048;
 		$config['max_height']           = 2048;
@@ -569,7 +569,7 @@ class Laporan extends CI_Controller {
 		$this->load->library('upload');
 		$nmfile = "file_".time(); 
 		$config['upload_path'] = './assets/uploads/'; 
-		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; 
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp|mp4|mkv|webm|flv|ogg|ogv|avi|mov|wmv|m4p|mpeg|3gp'; 
 		$config['max_size']             = 5000;
 		$config['max_width']            = 2048;
 		$config['max_height']           = 2048;

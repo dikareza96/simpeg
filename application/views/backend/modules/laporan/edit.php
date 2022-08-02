@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label class="exampleInputFile">Tempat kejadian</label>
-                    <input type="text" class="form-control" id="tersangka" name="tempat_kejadian" placeholder="Enter role name" value="<?php echo $row->tersangka; ?>" disabled>
+                    <input type="text" class="form-control" id="tersangka" name="tempat_kejadian" placeholder="Enter role name" value="<?php echo $row->tempat_kejadian; ?>" disabled>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Detail laporan</label>
@@ -272,13 +272,13 @@
                     <?php if(!empty($tindak_lanjut)){
                             ?>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Tindak lanjut </label>
+                        <label for="exampleInputEmail1">Evaluasi </label>
                         <textarea class="form-control" rows="3" name="tindak_lanjut_komite" id="tindak_lanjut_komite" disabled=""><?php echo $tindak_lanjut; ?></textarea>
 
                     </div>
                     <?php }else{ ?>
                              <div class="form-group">
-                        <label for="exampleInputEmail1">Tindak lanjut </label>
+                        <label for="exampleInputEmail1">Evaluasi </label>
                         <textarea class="form-control" rows="3" name="tindak_lanjut_komite" id="tindak_lanjut_komite" ><?php echo $tindak_lanjut; ?></textarea>
 
                     </div>
