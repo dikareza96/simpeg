@@ -5,7 +5,7 @@
  Source Server Type    : MySQL
  Source Server Version : 100422
  Source Host           : localhost:3306
- Source Schema         : simpeg
+ Source Schema         : sidamari
 
  Target Server Type    : MySQL
  Target Server Version : 100422

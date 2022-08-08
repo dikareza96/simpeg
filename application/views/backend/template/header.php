@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>SIDAMARI | Dashboard</title>
+    <title>SIDAMARI</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -47,7 +47,7 @@
         <!-- header -->
         <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>SDMRI</b></span>
       <!-- logo for regular state and mobile devices -->
@@ -80,7 +80,7 @@
                 <img src="<?php echo base_url(); ?>assets/backend/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                 <?php echo $this->session->userdata('name'); ?>
+                 <?php echo $this->session->userdata('nama_lengkap'); ?>
                   
                 </p>
               </li>

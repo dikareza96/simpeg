@@ -37,58 +37,203 @@
 
                 <div class="form-group">
                     <label class="exampleInputFile">Pihak yang dilaporkan</label>
-                    <input type="text" class="form-control" id="tersangka" name="tersangka" placeholder="Enter role name" value="<?php echo $row->tersangka; ?>">
+                    <input type="text" class="form-control" id="tersangka" name="tersangka" placeholder="Enter role name" value="<?php echo $row->tersangka; ?>" disabled>
                 </div>
                 <div class="form-group">
                     <label class="exampleInputFile">Waktu kejadian</label>
-                    <input type="text" class="form-control" id="waktu_kejadian" name="waktu_kejadian" placeholder="Enter role name" value="<?php echo $row->waktu_kejadian; ?>">
+                    <input type="text" class="form-control" id="waktu_kejadian" name="waktu_kejadian" placeholder="Enter role name" value="<?php echo $row->waktu_kejadian; ?>" disabled>
                 </div>
                 <div class="form-group">
                     <label class="exampleInputFile">Tempat kejadian</label>
-                    <input type="text" class="form-control" id="tersangka" name="tempat_kejadian" placeholder="Enter role name" value="<?php echo $row->tempat_kejadian; ?>">
+                    <input type="text" class="form-control" id="tersangka" name="tempat_kejadian" placeholder="Enter role name" value="<?php echo $row->tempat_kejadian; ?>" disabled>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Detail laporan</label>
-                    <textarea class="form-control" rows="3" name="detail_laporan" id="waktu_kejadian"><?php echo $row->detail_laporan; ?></textarea>
+                    <textarea class="form-control" rows="3" name="detail_laporan" id="waktu_kejadian" disabled><?php echo $row->detail_laporan; ?></textarea>
 
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">Bukti Foto / video</label>
-                    <input type="file" class="form-control" id="image" name="image" >
+                    <input type="file" class="form-control" id="image" name="image" disabled >
 
 
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <img class="form-control" style="width: 200px;height: 200px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
-                       
-                    </div>
-                    </div>
-                    
 
+                    </div>
                 </div>
+
+
+
+
+
                 <div class="form-group">
-                    
-                     <div class="col-md-12">
-                        <video controls>
+
+                   <div class="col-md-12">
+                    <video controls>
                         <source src="<?=base_url()?>assets/uploads/<?=$row->file;?>" type="video/mp4">    
-                         <!--    <iframe class="embed-responsive-item" src="<?=base_url()?>assets/uploads/<?=$row->file;?>"  type="video/mp4" frameborder="0" allowfullscreen></iframe> -->
-                        </video>
+                           <!--    <iframe class="embed-responsive-item" src="<?=base_url()?>assets/uploads/<?=$row->file;?>"  type="video/mp4" frameborder="0" allowfullscreen></iframe> -->
+                       </video>
+                   </div>
+
+               </div>
+               <?php
+               if (isset($jenis_komplain) ? $jenis_komplain:'') {
+                $jenis_komplain;
+            }else{
+                $jenis_komplain = '';
+            }
+            if (isset($jenis_laporan) ? $jenis_laporan:'') {
+                $jenis_laporan;
+            }else{
+                $jenis_laporan = '';
+            }
+            if (isset($tindak_lanjut) ? $tindak_lanjut:'') {
+                $tindak_lanjut;
+            }else{
+                $tindak_lanjut = '';
+            }
+            ?>
+
+            <div class="form-group">
+                <label class="exampleInputFile">Jenis laporan</label>
+                <input type="text" class="form-control" id="jenis_laporan" name="jenis_laporan" placeholder="" value="<?php echo $jenis_laporan; ?>" disabled>
+            </div>
+
+            <div class="form-group">
+
+                <label for="exampleInputEmail1">Jenis komplain: </label>
+                <?php 
+                if('1' ==  $jenis_komplain){
+                    ?>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="jenis_komplain" value="1" checked disabled>
+                            Perilaku yang mengganggu
+                        </label>
+                    </div>
+                <?php }else{ ?>
+                 <div class="radio">
+                    <label>
+                        <input type="radio" name="jenis_komplain" value="1" disabled>
+                        Perilaku yang mengganggu
+                    </label>
                 </div>
+            <?php } ?>
+            <?php if('2' ==  $jenis_komplain){
+                ?>
 
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="jenis_komplain" value="2" checked disabled>
+                        Perilaku yang tidak layak
+                    </label>
+                </div>
+            <?php }else{ ?>
+             <div class="radio">
+                <label>
+                    <input type="radio" name="jenis_komplain" value="2" disabled>
+                    Perilaku yang tidak layak
+                </label>
             </div>
-
-            <div class="box-footer">
-                <a href="<?php echo base_url("".$route."/index")?>" type="button" class="btn btn-default ">Back</a>
-                <button type="submit" class="btn btn-info pull-right">Submit</button>
-            </div>
-            <!-- /.box-body -->
-
         <?php } ?>
 
+
+        <?php if('3' ==  $jenis_komplain){
+            ?>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="jenis_komplain" value="3" checked disabled>
+                    Perilaku yang melecehkan
+                </label>
+            </div>
+        <?php }else{ ?>
+         <div class="radio">
+            <label>
+                <input type="radio" name="jenis_komplain" value="3" disabled>
+                Perilaku yang melecehkan
+            </label>
+        </div>
+    <?php } ?>
+
+
+    <?php if('4' ==  $jenis_komplain){
+        ?>
+        <div class="radio">
+            <label>
+                <input type="radio" name="jenis_komplain" value="4" checked disabled>
+                Pelecehan seksual
+            </label>
+        </div>
+    <?php }else{ ?>
+     <div class="radio">
+        <label>
+            <input type="radio" name="jenis_komplain" value="4" disabled>
+            Pelecehan seksual
+        </label>
     </div>
-    <!-- /.box -->
+<?php } ?>
+
+</div>
+
+
+<?php if(!empty($tindak_lanjut_komite )){?>
+    <?php foreach($tindak_lanjut_komite as $index){?>
+        <div class="form-group">
+            <?php if($index->id_komite == 'humas' ){ ?>
+                <label for="exampleInputEmail1">Evaluasi Humas</label>
+            <?php }if($index->id_komite == 'komite_etik' ){ ?>
+                <label for="exampleInputEmail1">Evaluasi Komite Etik & Hukum</label>
+            <?php }if($index->id_komite == 'spi' ){ ?>
+                <label for="exampleInputEmail1">Evaluasi SPI</label>
+            <?php }?>
+            <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $index->tindak_lanjut; ?></textarea>
+        </div> 
+    <?php }?>
+<?php }else{?>
+   <div class="form-group">
+    <label for="exampleInputEmail1">Evaluasi</label>
+    <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Belum ada evaluasi</textarea>
+</div> 
+<?php }?>
+
+
+<?php if(!empty($row->tindak_lanjut_karumkit)){?>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Keputusan Karumkit</label>
+        <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit" disabled><?php echo $row->tindak_lanjut_karumkit; ?></textarea>
+    </div>
+<?php }else{?>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Keputusan Karumkit</label>
+        <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit" disabled="">Belum ada hasil keputusan</textarea>
+
+    </div>
+<?php } ?>
+
+
+
+
+
+
+
+
+</div>
+
+<div class="box-footer">
+    <a href="<?php echo base_url("".$route."/index")?>" type="button" class="btn btn-default ">Back</a>
+    <button type="submit" class="btn btn-info pull-right">Submit</button>
+</div>
+<!-- /.box-body -->
+
+<?php } ?>
+
+</div>
+<!-- /.box -->
 
 </div>
 <!--/.col (left) -->

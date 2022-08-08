@@ -229,6 +229,9 @@
     $('.select2').select2()
 
 });
+    setTimeout(function() {
+      $('#gagal_popup').hide()
+    }, 4000);
     //iCheck for checkbox and radio inputs
     // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
     //   checkboxClass: 'icheckbox_minimal-blue',

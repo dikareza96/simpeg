@@ -28,14 +28,14 @@ class Pengaduan extends CI_Controller {
 		// $date = $this->format('Y-m-d H:i:s');
 			$get_user_id = $this->session->userdata('id');
 			$module = $this->table;
-		
 		// $data['tanggal'] = $this->$date; 
 			$data['route'] = $this->table;
 			$data[$module] = $this->db->query("
-				SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at,b.id as id_user,b.`name` as nama_user
+				SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at,b.id as id_user,b.nama_lengkap as nama_user
 				FROM pengaduan a 
-				INNER JOIN user b  ON a.user_pelapor = b.id
-				where a.user_pelapor = '$get_user_id'")->result();
+				INNER JOIN tb_users b  ON a.user_pelapor = b.id
+				where a.user_pelapor = '$get_user_id'
+				GROUP BY a.created_at DESC ")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
 			$this->load->view('backend/modules/'.$module.'/index',$data);
@@ -147,6 +147,57 @@ class Pengaduan extends CI_Controller {
 		$module = $this->table;
 		$data['route'] = $this->table;
 		$where = array('id' => $id);
+		$data['tindak_lanjut_komite'] = $this->db->query("SELECT
+			*
+			FROM
+			tindak_lanjut 
+			where id_pengaduan  = '$id'
+			GROUP BY
+			id_komite ASC")->result();
+
+		$vote_jenis_laporan = $this->db->query("SELECT
+			a.jenis_laporan,
+			COUNT(a.jenis_laporan) AS vote_jenis_laporan 
+			FROM
+			tindak_lanjut a
+			INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan  = '$id'
+			GROUP BY 
+			jenis_laporan
+			ORDER BY 
+			vote_jenis_laporan DESC
+			LIMIT 1")->result_array();
+		$vote_jenis_komplain = $this->db->query("SELECT
+			a.jenis_komplain,
+			COUNT(a.jenis_komplain) AS vote_jenis_komplain
+
+			FROM
+			tindak_lanjut a
+			INNER JOIN pengaduan b  ON a.id_pengaduan= b.id
+			where a.id_pengaduan  = '$id'
+			GROUP BY 
+			jenis_komplain
+			ORDER BY 
+			vote_jenis_komplain DESC
+			LIMIT 1")->result_array();
+
+		foreach ($vote_jenis_laporan as $key => $val) {
+			$vote1 []= $val;
+		}
+		foreach ($vote_jenis_komplain as $key => $val) {
+			$vote2 []= $val;
+		}
+		if(!empty($vote1[0]['jenis_laporan'])){
+
+			$data['jenis_laporan'] = $vote1[0]['jenis_laporan'];
+		}
+		if(!empty($vote2[0]['jenis_komplain'])){
+
+			$data['jenis_komplain'] = $vote2[0]['jenis_komplain'];
+			// $jenis_komplain = $tindak[0]['jenis_komplain'];
+		}
+
+
 		$data[$module] = $this->Resource->edit($where,$this->table)->result();
 		$this->load->view('backend/template/header');
 		$this->load->view('backend/template/sidebar');

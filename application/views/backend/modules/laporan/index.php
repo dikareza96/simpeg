@@ -7,6 +7,14 @@
       Laporan Pegawai 
 
     </h1> 
+
+    <?php if($this->session->flashdata('sukses')){?>
+       <div class="alert alert-success  alert-dismissible" id="sukses_popup">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i> Warning</h4>
+                    Data sukses terimpan!
+                </div>
+      <?php }?>
     
   </section>
   <!-- Main content -->
@@ -52,8 +60,9 @@
             <th class="text-center">Tanggal laporan</th>
             <th class="text-center">Waktu kejadian</th>
             <th class="text-center">Tempat kejadian</th>
-            <th class="text-center">Tersangka</th>
-            <th class="text-center">Korban</th>
+            <th class="text-center">Pihak yg dilaporkan</th>
+            <th class="text-center">Pelapor</th>
+            <th class="text-center">Status Aduan</th>
             <th class="text-center">Action</th>
           </tr>
         </thead>
@@ -74,11 +83,29 @@
               <td class="text-center"><?php echo $row->tempat_kejadian; ?></td>
               <th class="text-center"><?php echo $row->tersangka; ?></th>
               <th class="text-center"><?php echo $row->korban; ?></th>
+               <?php
+                  if(0 ==  $row->status){?> 
+                  <td class="text-center"><a href="" class="btn btn-info btn-sm btn-flat" >
+                          Aduan diterima
+                           </a></td>
+                  <?php }elseif(1 ==  $row->status) {?>
+                    <td class="text-center"><a href="" class="btn btn-warning btn-sm btn-flat" >
+                          Evaluasi 
+                         </a></td>
+                  <?php } elseif(2 ==  $row->status) {?>
+                     <td class="text-center"><a href="" class="btn btn bg-purple btn-sm btn-flat" >
+                          Keputusan Karumkit
+                         </a></td>
+                  <?php }elseif(3 ==  $row->status) { ?>
+                     <td class="text-center"><a href="" class="btn btn-success btn-sm btn-flat" >
+                          Aduan selesai
+                         </a></td>
+                  <?php } ?>
 
               <td class="text-center" style="width:150px;">
                <form method="POST" action="<?php echo base_url("".$route."/destroy/$row->id") ?>" accept-charset="UTF-8">
                 <?php 
-                              if($this->session->userdata('level')=='komite_medik' || $this->session->userdata('level')=='admin' || $this->session->userdata('level')=='komite_etik' || $this->session->userdata('level')=='komite_tenaga' || $this->session->userdata('level')=='komite_keperawatan'){
+                              if($this->session->userdata('level')=='komite_medik' || $this->session->userdata('level')=='admin' || $this->session->userdata('level')=='komite_etik' || $this->session->userdata('level')=='komite_tenaga' || $this->session->userdata('level')=='komite_keperawatan' || $this->session->userdata('level')=='spi' || $this->session->userdata('level')=='humas'){
                                 ?>
                 <a href="<?php echo base_url("".$route."/edit/$row->id") ?>" class="btn btn-primary btn-sm btn-flat" >
                   Detail Laporan
@@ -147,5 +174,8 @@
  $(function () {
 
   $('#table').DataTable()
-})
+});
+ setTimeout(function() {
+      $('#sukses_popup').hide()
+    }, 4000);
 </script>

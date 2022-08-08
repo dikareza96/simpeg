@@ -8,7 +8,8 @@
         <img src="<?php echo base_url(); ?>assets/backend/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
-        <p><?php echo $this->session->userdata('name'); ?></p>
+        <p><?php echo $this->session->userdata('nama_lengkap'); ?></p>
+        <p><?php echo $this->session->userdata('level'); ?></p>
         <!-- <a href="#"><i class="fa fa-circle text-success"></i> Onaline</a> -->
       </div>
     </div>
@@ -36,7 +37,7 @@
      }
         ?>
          <?php 
-      if($this->session->userdata('level')=='karumkit' || $this->session->userdata('level')=='admin' || $this->session->userdata('level')=='komite_medik'){
+      if($this->session->userdata('level')=='karumkit' || $this->session->userdata('level')=='admin' || $this->session->userdata('level')=='komite_medik' || $this->session->userdata('level')=='komite_etik' || $this->session->userdata('level')=='spi' || $this->session->userdata('level')=='humas'){
         ?>
     <li class="treeview">
       <a href="#">
