@@ -9,7 +9,7 @@
       </div>
       <div class="pull-left info">
         <p><?php echo $this->session->userdata('nama_lengkap'); ?></p>
-        <p><?php echo $this->session->userdata('level'); ?></p>
+        <!-- <p><?php echo $this->session->userdata('level'); ?></p> -->
         <!-- <a href="#"><i class="fa fa-circle text-success"></i> Onaline</a> -->
       </div>
     </div>

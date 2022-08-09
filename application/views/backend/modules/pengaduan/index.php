@@ -75,11 +75,11 @@
               
                   <?php }elseif(1 ==  $row->status) {?>
                     <td class="text-center"><a href="" class="btn btn-warning btn-sm btn-flat" >
-                          Aduan diteruskan
+                          Evaluasi
                          </a></td>
                   <?php } elseif(2 ==  $row->status) {?>
                      <td class="text-center"><a href="" class="btn btn bg-purple btn-sm btn-flat" >
-                          Aduan di proses
+                         Keputusan Karumkit
                          </a></td>
                   <?php }elseif(3 ==  $row->status) { ?>
                   
