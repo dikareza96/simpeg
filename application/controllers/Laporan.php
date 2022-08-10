@@ -621,9 +621,25 @@ class Laporan extends CI_Controller {
 		
 		$module = $this->table;
 		$get_id = $this->input->post('id');
-		$this->form_validation->set_rules('jenis_laporan', 'Jenis Laporan', 'required');
-		$this->form_validation->set_rules('jenis_komplain', 'Jenis Komplain', 'required');
-		$this->form_validation->set_rules('tindak_lanjut_komite', 'Tindak Lanjut', 'required');
+		
+		
+		if($this->session->userdata('level')=='spi' || $this->session->userdata('level')=='humas' || $this->session->userdata('level')=='komite_etik'){
+			$this->form_validation->set_rules('jenis_laporan', 'Jenis Laporan', 'required');
+			$this->form_validation->set_rules('jenis_komplain', 'Jenis Komplain', 'required');
+			$this->form_validation->set_rules('tindak_lanjut_komite', 'Evaluasi', 'required');
+
+		}elseif($this->session->userdata('level')=='karumkit' || $this->session->userdata('level')=='admin'){
+			// $this->form_validation->set_rules('tindak_lanjut_karumkit', 'Keputusan karumkit', 'required');
+			// $this->form_validation->set_rules('status', 'Status', 'required');
+			if($this->input->post('tindak_lanjut_karumkit') == true){
+				$this->form_validation->set_rules('tindak_lanjut_karumkit', 'Keputusan karumkit', 'required');
+
+			}else{
+				
+				$this->form_validation->set_rules('status', 'Status', 'required');
+
+			}
+		}
 		
 		$data['status']="sukses";
 		$data['error']="";
@@ -640,12 +656,23 @@ class Laporan extends CI_Controller {
 
 		$id = $this->input->post('id');
 		$check = $this->input->post('komite');
-		$jenis_laporan = $this->input->post('jenis_laporan');
-		$jenis_komplain = $this->input->post('jenis_komplain');
-		$tindak_lanjut_komite = $this->input->post('tindak_lanjut_komite');
-		$tindak_lanjut_karumkit = $this->input->post('tindak_lanjut_karumkit');
-		$status = $this->input->post('status');
+		if($this->session->userdata('level')=='spi' || $this->session->userdata('level')=='humas' || $this->session->userdata('level')=='komite_etik'){
+			$jenis_laporan = $this->input->post('jenis_laporan');
+			$jenis_komplain = $this->input->post('jenis_komplain');
+			$tindak_lanjut_komite = $this->input->post('tindak_lanjut_komite');
+		}elseif($this->session->userdata('level')=='karumkit' || $this->session->userdata('level')=='admin'){
 
+			if($this->input->post('tindak_lanjut_karumkit') == true){
+				$tindak_lanjut_karumkit = $this->input->post('tindak_lanjut_karumkit');
+
+			}else{
+				
+				$final = $this->input->post('status');
+			}
+			
+		}
+		// $json= json_encode($tindak_lanjut_karumkit);
+		// echo ($json);
 		if ($this->form_validation->run()== true){
 			if(!empty($check)){
 				foreach ($check as $row) {
@@ -657,11 +684,9 @@ class Laporan extends CI_Controller {
 					$this->Resource->komite(array('id_pengaduan'=> $id,'id_komite' => $row  ));
 				}
 
-
 				$data = array(
 					'status' => "1",
 					
-
 				);
 				$where = array(
 					'id' => $id
@@ -709,10 +734,10 @@ class Laporan extends CI_Controller {
 
 				redirect('laporan/index');
 
-			}elseif(!empty($status)){
+			}elseif(!empty($final)){
 
 				$data = array(
-					'status' => $status,
+					'status' => $final,
 				);
 				$where = array(
 					'id' => $id

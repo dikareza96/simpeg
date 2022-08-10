@@ -67,6 +67,16 @@
             <input type="file" class="form-control" id="image" name="image" disabled>
             <img class="form-control" id="bukti_foto" style="width: 300px;height: 300px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
         </div>
+         <div class="form-group">
+
+                   <div class="col-md-12">
+                    <video controls>
+                        <source src="<?=base_url()?>assets/uploads/<?=$row->file;?>" type="video/mp4">    
+                           <!--    <iframe class="embed-responsive-item" src="<?=base_url()?>assets/uploads/<?=$row->file;?>"  type="video/mp4" frameborder="0" allowfullscreen></iframe> -->
+                       </video>
+                   </div>
+
+               </div>
     <?php } ?>
     
     <?php 

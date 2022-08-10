@@ -58,6 +58,16 @@
                     <input type="file" class="form-control" id="image" name="image" disabled>
                     <img class="form-control" id="bukti_foto" alt="Bukti Foto" style="width: 300px;height: 300px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
                 </div>
+                 <div class="form-group">
+
+                   <div class="col-md-12">
+                    <video controls>
+                        <source src="<?=base_url()?>assets/uploads/<?=$row->file;?>" type="video/mp4">    
+                           <!--    <iframe class="embed-responsive-item" src="<?=base_url()?>assets/uploads/<?=$row->file;?>"  type="video/mp4" frameborder="0" allowfullscreen></iframe> -->
+                       </video>
+                   </div>
+
+               </div>
 
                 <?php
                 if (isset($jenis_komplain) ? $jenis_komplain:'') {
@@ -281,7 +291,7 @@
                           <label for="exampleInputEmail1">Status: </label>
                           <br>
                           <input type="radio" class="minimal" name="status" value="3" >
-                          <label for="exampleInputEmail1">Status selesai</label>
+                          <label for="exampleInputEmail1">Status selesai </label>
                       </div> 
                 
                   <?php }else{?>
