@@ -35,7 +35,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">SISTEM INFORMASI PELAPORAN BUDAYA KESELAMATAN RUMAH SAKIT BHAYANGKARA KEDIRI</p>
 
     <form action="<?php echo site_url('login/proses'); ?>" method="get">
        <?php
@@ -58,7 +58,7 @@
        
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
           <!-- <p >User: admin</p>
           <p >Pass: admin</p> -->
         </div>

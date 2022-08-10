@@ -56,7 +56,7 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Bukti Foto / video</label>
                     <input type="file" class="form-control" id="image" name="image" disabled>
-                    <img class="form-control" style="width: 200px;height: 200px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
+                    <img class="form-control" id="bukti_foto" style="width: 300px;height: 300px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
                 </div>
 
                 <?php
@@ -277,6 +277,11 @@
 
 </div>
 <!-- /.box -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
 
 </div>
 <!--/.col (left) -->
@@ -308,23 +313,40 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        CKEDITOR.replace('editor2')
+        // CKEDITOR.replace('editor2')
     //bootstrap WYSIHTML5 - text editor
-    $('.textarea').wysihtml5()
+    // $('.textarea').wysihtml5()
 
 
 
     //Initialize Select2 Elements
     $('.select2').select2()
 
-});
+
     setTimeout(function() {
       $('#gagal_popup').hide()
     }, 4000);
-    //iCheck for checkbox and radio inputs
-    // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-    //   checkboxClass: 'icheckbox_minimal-blue',
-    //   radioClass   : 'iradio_minimal-blue'
-    // })
+
+
+
+var img = document.getElementById("bukti_foto");
+
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+}
+
+
+var span = document.getElementsByClassName("close")[0];
+
+
+span.onclick = function() { 
+  modal.style.display = "none";
+}
+    
+});
 </script>
 
