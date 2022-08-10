@@ -56,7 +56,7 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Bukti Foto / video</label>
                     <input type="file" class="form-control" id="image" name="image" disabled>
-                    <img class="form-control" id="bukti_foto" style="width: 300px;height: 300px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
+                    <img class="form-control" id="bukti_foto" alt="Bukti Foto" style="width: 300px;height: 300px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
                 </div>
 
                 <?php
@@ -163,7 +163,7 @@
                         </div> 
                     <?php }?>
                 <?php }else{?>
-                   <div class="form-group">
+                 <div class="form-group">
                     <label for="exampleInputEmail1">Evaluasi</label>
                     <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belom mengisi tindak lanjut</textarea>
                 </div> 
@@ -183,7 +183,7 @@
                         </label>
                     </div>
                 <?php }else{ ?>
-                 <div class="radio">
+                   <div class="radio">
                     <label>
                         <input type="radio" name="jenis_komplain" value="1" disabled>
                         Perilaku yang mengganggu
@@ -200,7 +200,7 @@
                     </label>
                 </div>
             <?php }else{ ?>
-             <div class="radio">
+               <div class="radio">
                 <label>
                     <input type="radio" name="jenis_komplain" value="2" disabled>
                     Perilaku yang tidak layak
@@ -218,7 +218,7 @@
                 </label>
             </div>
         <?php }else{ ?>
-         <div class="radio">
+           <div class="radio">
             <label>
                 <input type="radio" name="jenis_komplain" value="3" disabled>
                 Perilaku yang melecehkan
@@ -236,7 +236,7 @@
             </label>
         </div>
     <?php }else{ ?>
-     <div class="radio">
+       <div class="radio">
         <label>
             <input type="radio" name="jenis_komplain" value="4" disabled>
             Pelecehan seksual
@@ -250,6 +250,11 @@
         <label for="exampleInputEmail1">Keputusan Karumkit</label>
         <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit" disabled><?php echo $row->tindak_lanjut_karumkit; ?></textarea>
     </div>
+<?php }elseif(!empty($row->status == 2)){?>
+       <div class="form-group">
+        <label for="exampleInputEmail1">Keputusan Karumkit</label>
+        <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit" disabled=""></textarea>
+    </div>
 <?php }else{?>
 
     <div class="form-group">
@@ -257,13 +262,43 @@
         <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit"></textarea>
     </div>
 <?php } ?>
- <?php if($this->session->flashdata('error')){?>
-                <div class="alert alert-danger alert-dismissible" id="gagal_popup">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-ban"></i> Warning</h4>
-                    Gagal menyimpan, data anda kurang lengkap!
-                </div>
-            <?php }?>
+ <?php if(!empty($row->status == '3')){?>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Status: </label>
+                        <br>
+                        <input type="radio" class="minimal" name="status" value="3" checked="" disabled="">
+                        <label for="exampleInputEmail1">Status selesai</label>
+                    </div>
+                   <?php }elseif(!empty($row->status < '2')){?>
+                     <div class="form-group">
+                          <!--  <label for="exampleInputEmail1">Status: </label>
+                          <br>
+                          <input type="radio" class="minimal" name="status" value="3"disabled>
+                          <label for="exampleInputEmail1">Status selesai</label> -->
+                      </div> 
+                      <?php }elseif(!empty($row->tindak_lanjut_karumkit)){?>
+                     <div class="form-group">
+                          <label for="exampleInputEmail1">Status: </label>
+                          <br>
+                          <input type="radio" class="minimal" name="status" value="3" >
+                          <label for="exampleInputEmail1">Status selesai</label>
+                      </div> 
+                
+                  <?php }else{?>
+                     <div class="form-group">
+                          <label for="exampleInputEmail1">Belum ada keputusan karumkit </label>
+                          <!-- <br>
+                          <input type="radio" class="minimal" name="status" value="3" disabled="">
+                          <label for="exampleInputEmail1">Status selesai</label> -->
+                      </div>
+                    <?php }?>
+<?php if($this->session->flashdata('error')){?>
+    <div class="alert alert-danger alert-dismissible" id="gagal_popup">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><i class="icon fa fa-ban"></i> Warning</h4>
+        Gagal menyimpan, data anda kurang lengkap!
+    </div>
+<?php }?>
 </div>
 
 
@@ -321,15 +356,12 @@
 
     //Initialize Select2 Elements
     $('.select2').select2()
+    // Get the modal
+var modal = document.getElementById("myModal");
 
-
-    setTimeout(function() {
-      $('#gagal_popup').hide()
-    }, 4000);
-
-
-
+// Get the image and insert it inside the modal - use its "alt" text as a caption
 var img = document.getElementById("bukti_foto");
+// var img = document.getElementById("myImg");
 
 var modalImg = document.getElementById("img01");
 var captionText = document.getElementById("caption");
@@ -339,14 +371,14 @@ img.onclick = function(){
   captionText.innerHTML = this.alt;
 }
 
-
+// Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-
+// When the user clicks on <span> (x), close the modal
 span.onclick = function() { 
   modal.style.display = "none";
 }
-    
+
 });
 </script>
 

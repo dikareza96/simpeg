@@ -63,7 +63,7 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Bukti Foto / video</label>
                     <input type="file" class="form-control" id="image" name="image" disabled>
-                    <img class="form-control" style="width: 200px;height: 200px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
+                    <img class="form-control" id="bukti_foto" alt="Bukti Foto" style="width: 300px;height: 300px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
                 </div>
                 <?php
                 if (isset($jenis_komplain) ? $jenis_komplain:'') {
@@ -149,14 +149,41 @@
                     }
                  ?> 
  
-             <?php foreach($tindak_lanjut_komite as $index){
+            <!--  <?php foreach($tindak_lanjut_komite as $index){
               ?>  
                     <div class="form-group">
-                    <label for="exampleInputEmail1">Tindak lanjut <?php echo $nama_komite;?></label>
+                    <label for="exampleInputEmail1">Evaluasi <?php echo $nama_komite;?></label>
                        <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $index->tindak_lanjut; ?></textarea>
                    </div> 
-              <?php }?>
+              <?php }?> -->
+              <?php if(!empty($tindak_lanjut_komite )){?>
+                    <?php foreach($tindak_lanjut_komite as $index){?>
+                        <div class="form-group">
+                            <?php if($index->id_komite == 'humas' ){ ?>
+                                <label for="exampleInputEmail1">Evaluasi Humas</label>
+                            <?php }if($index->id_komite == 'komite_etik' ){ ?>
+                                <label for="exampleInputEmail1">Evaluasi Komite Etik & Hukum</label>
+                            <?php }if($index->id_komite == 'spi' ){ ?>
+                                <label for="exampleInputEmail1">Evaluasi SPI</label>
+                            <?php }?>
+                            <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled><?php echo $index->tindak_lanjut; ?></textarea>
+                        </div> 
+                    <?php }?>
+                <?php }else{?>
+                 <div class="form-group">
+                    <label for="exampleInputEmail1">Evaluasi</label>
+                    <textarea class="form-control" rows="3" name="tindak_lanjut" id="tindak_lanjut" disabled>Komite belom mengisi tindak lanjut</textarea>
+                </div> 
+            <?php }?>
 
+             <?php if(!empty($row->tindak_lanjut_karumkit)){?>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Keputusan Karumkit</label>
+                    <textarea class="form-control" rows="3" name="tindak_lanjut_karumkit" id="tindak_lanjut_karumkit" disabled><?php echo $row->tindak_lanjut_karumkit; ?></textarea>
+                </div>
+            <?php }?>
+
+                
                    <?php if(!empty($row->status == '3')){?>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Status: </label>
@@ -164,6 +191,13 @@
                         <input type="radio" class="minimal" name="status" value="3" checked="" disabled="">
                         <label for="exampleInputEmail1">Status selesai</label>
                     </div>
+                   <?php }elseif(!empty($row->status < '2')){?>
+                     <div class="form-group">
+                         <!--  <label for="exampleInputEmail1">Status: </label>
+                          <br>
+                          <input type="radio" class="minimal" name="status" value="3"disabled>
+                          <label for="exampleInputEmail1">Status selesai</label> -->
+                      </div> 
                   <?php }else{?>
                      <div class="form-group">
                           <label for="exampleInputEmail1">Status: </label>
@@ -171,7 +205,7 @@
                           <input type="radio" class="minimal" name="status" value="3">
                           <label for="exampleInputEmail1">Status selesai</label>
                       </div>
-                  <?php }?>
+                    <?php }?>
 
 
 
@@ -188,6 +222,11 @@
 <?php }?>
 </div>
 <!-- /.box -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
 
 </div>
 <!--/.col (left) -->
@@ -219,23 +258,37 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        CKEDITOR.replace('editor2')
+        // CKEDITOR.replace('editor2')
     //bootstrap WYSIHTML5 - text editor
-    $('.textarea').wysihtml5()
+    // $('.textarea').wysihtml5()
 
 
 
     //Initialize Select2 Elements
     $('.select2').select2()
+    // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById("bukti_foto");
+// var img = document.getElementById("myImg");
+
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+  modal.style.display = "none";
+}
 
 });
-    setTimeout(function() {
-      $('#gagal_popup').hide()
-    }, 4000);
-    //iCheck for checkbox and radio inputs
-    // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-    //   checkboxClass: 'icheckbox_minimal-blue',
-    //   radioClass   : 'iradio_minimal-blue'
-    // })
 </script>
 
