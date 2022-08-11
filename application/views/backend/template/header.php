@@ -109,7 +109,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   position: absolute;
   top: 15px;
   right: 35px;
-  color: #f1f1f1;
+  color: #FFFFff;
   font-size: 40px;
   font-weight: bold;
   transition: 0.3s;

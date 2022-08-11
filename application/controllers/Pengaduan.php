@@ -51,7 +51,7 @@ class Pengaduan extends CI_Controller {
 			$data[$module] = $this->db->query("
 				SELECT *
 				FROM pengaduan
-				GROUP BY a.created_at DESC
+				GROUP BY created_at DESC
 				")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
