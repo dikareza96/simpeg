@@ -26,21 +26,20 @@ class Laporan extends CI_Controller {
 		if($this->session->userdata('level')=='karumkit' || $this->session->userdata('level')=='admin'){
 			$module = $this->module;
 
-			$masuk = $this->db->query("SELECT * FROM pengaduan WHERE status = 0");
+			$masuk = $this->db->query("SELECT * FROM pengaduan WHERE status = 0 AND delete_status = 0");
 			$data['masuk'] = $masuk->num_rows();
 
-			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status IN (1,2)");
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status IN (1,2) AND delete_status = 0");
 			$data['proses'] = $proses->num_rows();
 
-			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3');
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3 AND delete_status = 0');
 			$data['selesai'] = $selesai->num_rows();
-
-
 			
 			$data['route'] = $this->module;
 			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at,b.nama_lengkap as korban
 				FROM pengaduan a 
 				INNER JOIN tb_users b  ON a.user_pelapor = b.id
+				WHERE a.delete_status = '0'
 				GROUP BY a.created_at DESC
 				")->result();
 			// $data[$module] = $this->Resource->show($this->table)->result();
@@ -55,8 +54,9 @@ class Laporan extends CI_Controller {
 			$masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
 				FROM pengaduan a 
 				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
-				where c.id_komite = '$get_user_level'
-				and a.status = '1'");
+				where c.id_komite = '$get_user_level' AND a.delete_status = '0'
+				and a.status = '1'
+				");
 			$data['masuk'] = $masuk->num_rows();
 
 			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status = 2");
@@ -71,7 +71,8 @@ class Laporan extends CI_Controller {
 				INNER JOIN tb_users b  ON a.user_pelapor = b.id
 				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
 				where c.id_komite = '$get_user_level'
-				AND a.status = '1'")->result();
+				AND a.status = '1'
+				")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
 			$this->load->view('backend/modules/'.$module.'/index',$data);
@@ -97,7 +98,8 @@ class Laporan extends CI_Controller {
 				FROM pengaduan a 
 				INNER JOIN tb_users b  ON a.user_pelapor = b.id
 				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
-				where c.id_komite = '$get_user_level'")->result();
+				where c.id_komite = '$get_user_level' AND a.delete_status = '0'
+				")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
 			$this->load->view('backend/modules/'.$module.'/index',$data);
@@ -123,31 +125,37 @@ class Laporan extends CI_Controller {
 				FROM pengaduan a 
 				INNER JOIN tb_users b  ON a.user_pelapor = b.id
 				INNER JOIN transaksi c  ON a.id = c.id_pengaduan
-				where c.id_komite = '$get_user_level'")->result();
+				where c.id_komite = '$get_user_level' AND a.delete_status = '0'
+				")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
 			$this->load->view('backend/modules/'.$module.'/index',$data);
 			$this->load->view('backend/template/footer');
+			
 		}elseif($this->session->userdata('level')=='spi'){
 			$get_user_level = $this->session->userdata('level');
 			$module = $this->module;
 
-			$masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at ,b.nama_lengkap as korban
-				FROM pengaduan a 
-				INNER JOIN tb_users b  ON a.user_pelapor = b.id
-				GROUP BY a.created_at DESC");
+			// $masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at ,b.nama_lengkap as korban
+			// 	FROM pengaduan a 
+			// 	INNER JOIN tb_users b  ON a.user_pelapor = b.id
+			// 	WHERE a.delete_status = '0'
+			// 	GROUP BY a.created_at DESC");
+			$masuk = $this->db->query("SELECT * FROM pengaduan WHERE status = 0 AND delete_status = 0");
+
 			$data['masuk'] = $masuk->num_rows();
 
-			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status IN (1,2)");
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status IN (1,2) AND delete_status = 0");
 			$data['proses'] = $proses->num_rows();
 
-			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3');
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3 AND delete_status = 0');
 			$data['selesai'] = $selesai->num_rows();
 			
 			$data['route'] = $this->module;
 			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at ,b.nama_lengkap as korban
 				FROM pengaduan a 
 				INNER JOIN tb_users b  ON a.user_pelapor = b.id
+				WHERE a.delete_status = '0'
 				GROUP BY a.created_at DESC")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
@@ -157,22 +165,25 @@ class Laporan extends CI_Controller {
 			$get_user_level = $this->session->userdata('level');
 			$module = $this->module;
 
-			$masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
-				FROM pengaduan a 
-				INNER JOIN tb_users b  ON a.user_pelapor = b.id
-				GROUP BY a.created_at DESC");
+			// $masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
+			// 	FROM pengaduan a 
+			// 	INNER JOIN tb_users b  ON a.user_pelapor = b.id
+			// 	WHERE a.delete_status = '0'
+			// 	GROUP BY a.created_at DESC");
+			$masuk = $this->db->query("SELECT * FROM pengaduan WHERE status = 0 AND delete_status = 0");
 			$data['masuk'] = $masuk->num_rows();
 
-			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status IN (1,2)");
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status IN (1,2) AND delete_status = 0");
 			$data['proses'] = $proses->num_rows();
 
-			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3');
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3 AND delete_status = 0');
 			$data['selesai'] = $selesai->num_rows();
 			
 			$data['route'] = $this->module;
 			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at ,b.nama_lengkap as korban
 				FROM pengaduan a 
 				INNER JOIN tb_users b  ON a.user_pelapor = b.id
+				WHERE a.delete_status = '0'
 				GROUP BY a.created_at DESC")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
@@ -182,22 +193,26 @@ class Laporan extends CI_Controller {
 			$get_user_level = $this->session->userdata('level');
 			$module = $this->module;
 
-			$masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
-				FROM pengaduan a 
-				INNER JOIN tb_users b  ON a.user_pelapor = b.id
-				GROUP BY a.created_at DESC");
+			// $masuk = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at
+			// 	FROM pengaduan a 
+			// 	INNER JOIN tb_users b  ON a.user_pelapor = b.id
+			// 	WHERE a.delete_status = '0'
+			// 	GROUP BY a.created_at DESC");
+			$masuk = $this->db->query("SELECT * FROM pengaduan WHERE status = 0 AND delete_status = 0");
+
 			$data['masuk'] = $masuk->num_rows();
 
-			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status IN (1,2)");
+			$proses = $this->db->query("SELECT  * FROM pengaduan WHERE status IN (1,2) AND delete_status = 0");
 			$data['proses'] = $proses->num_rows();
 
-			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3');
+			$selesai = $this->db->query('SELECT  * FROM pengaduan  WHERE status = 3 AND delete_status = 0');
 			$data['selesai'] = $selesai->num_rows();
 			
 			$data['route'] = $this->module;
 			$data[$module] = $this->db->query("SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at ,b.nama_lengkap as korban
 				FROM pengaduan a 
 				INNER JOIN tb_users b  ON a.user_pelapor = b.id
+				WHERE a.delete_status = '0'
 				GROUP BY a.created_at DESC")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');

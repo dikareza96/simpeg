@@ -34,7 +34,7 @@ class Pengaduan extends CI_Controller {
 				SELECT a.id,a.tersangka,a.waktu_kejadian,a.tempat_kejadian,a.detail_laporan,a.file,a.user_pelapor,a.jenis_laporan, a.tembusan,a.status, a.jenis_komplain,a.rekomendasi,a.tindak_lanjut_komite,a.tindak_lanjut_karumkit, a.created_at,b.id as id_user,b.nama_lengkap as nama_user
 				FROM pengaduan a 
 				INNER JOIN tb_users b  ON a.user_pelapor = b.id
-				where a.user_pelapor = '$get_user_id'
+				where a.user_pelapor = '$get_user_id' AND a.delete_status = '0'
 				GROUP BY a.created_at DESC ")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
@@ -51,6 +51,7 @@ class Pengaduan extends CI_Controller {
 			$data[$module] = $this->db->query("
 				SELECT *
 				FROM pengaduan
+				GROUP BY a.created_at DESC
 				")->result();
 			$this->load->view('backend/template/header');
 			$this->load->view('backend/template/sidebar');
@@ -128,6 +129,7 @@ class Pengaduan extends CI_Controller {
 				'detail_laporan' => $detail_laporan,
 				'user_pelapor' =>$this->session->userdata('id'),
 				'status' => 0,
+				'delete_status' => 0,
 				'created_at' => date('Y-m-d H:i:s'),
 									// 'created_at' => $date->format('Y-m-d H:i:s'),
 									// 'user_pelapor' => 'admin',

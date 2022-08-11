@@ -153,6 +153,7 @@
 
         </div>
     <?php } ?>
+    
     <?php 
     if($this->session->userdata('level')=='komite_medik' || $this->session->userdata('level')=='admin' || $this->session->userdata('level')=='komite_etik' || $this->session->userdata('level')=='komite_tenaga' || $this->session->userdata('level')=='komite_keperawatan' || $this->session->userdata('level')=='spi' || $this->session->userdata('level')=='humas'){
 
