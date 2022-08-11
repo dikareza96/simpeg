@@ -639,7 +639,7 @@ class Laporan extends CI_Controller {
 		
 		
 		if($this->session->userdata('level')=='spi' || $this->session->userdata('level')=='humas' || $this->session->userdata('level')=='komite_etik'){
-			$this->form_validation->set_rules('jenis_laporan', 'Jenis Laporan', 'required');
+			// $this->form_validation->set_rules('jenis_laporan', 'Jenis Laporan', 'required');
 			$this->form_validation->set_rules('jenis_komplain', 'Jenis Komplain', 'required');
 			$this->form_validation->set_rules('tindak_lanjut_komite', 'Evaluasi', 'required');
 
@@ -672,7 +672,7 @@ class Laporan extends CI_Controller {
 		$id = $this->input->post('id');
 		$check = $this->input->post('komite');
 		if($this->session->userdata('level')=='spi' || $this->session->userdata('level')=='humas' || $this->session->userdata('level')=='komite_etik'){
-			$jenis_laporan = $this->input->post('jenis_laporan');
+			// $jenis_laporan = $this->input->post('jenis_laporan');
 			$jenis_komplain = $this->input->post('jenis_komplain');
 			$tindak_lanjut_komite = $this->input->post('tindak_lanjut_komite');
 		}elseif($this->session->userdata('level')=='karumkit' || $this->session->userdata('level')=='admin'){
@@ -710,12 +710,12 @@ class Laporan extends CI_Controller {
 				$this->session->set_flashdata('sukses', 'Sukses menyimpan');
 
 				redirect('laporan/index');
-			}elseif(!empty($jenis_laporan)){
+			}elseif(!empty($jenis_komplain)){
 
 				$data = array(
 					'id_pengaduan' => $id,
 					'id_komite' => $this->session->userdata('level'),
-					'jenis_laporan' => $jenis_laporan,
+					// 'jenis_laporan' => $jenis_laporan,
 					'jenis_komplain' => $jenis_komplain,
 					'tindak_lanjut' => $tindak_lanjut_komite,
 					'created_at' =>	date('Y-m-d H:i:s')						

@@ -87,10 +87,10 @@
                 }
                 ?>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="exampleInputFile">Jenis laporan</label>
                     <input type="text" class="form-control" id="jenis_laporan" name="jenis_laporan" placeholder="" value="<?php echo $jenis_laporan; ?>" disabled>
-                </div>
+                </div> -->
                 <?php 
                         // $nama_komite1 = '';
                         // $nama_komite2 = '';

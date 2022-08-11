@@ -65,7 +65,7 @@
         <div class="form-group">
             <label for="exampleInputEmail1">Bukti Foto / video</label>
             <input type="file" class="form-control" id="image" name="image" disabled>
-            <img class="form-control" id="bukti_foto" style="width: 300px;height: 300px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
+            <img class="form-control" id="bukti_foto" alt="Bukti Foto" style="width: 300px;height: 300px;" src="<?=base_url()?>assets/uploads/<?=$row->file;?>">
         </div>
          <div class="form-group">
 
@@ -175,19 +175,17 @@
             $tindak_lanjut = '';
         }
         ?>
-        <?php 
-        if(!empty($jenis_laporan)){
-            ?>
-            <div class="form-group">
-                <label class="exampleInputFile">Jenis laporan</label>
-                <input type="text" class="form-control" id="jenis_laporan" name="jenis_laporan" placeholder="" value="<?php echo $jenis_laporan; ?>" disabled>
-            </div>
-        <?php }else{ ?>
-         <div class="form-group">
-            <label class="exampleInputFile">Jenis laporan</label>
-            <input type="text" class="form-control" id="jenis_laporan" name="jenis_laporan" placeholder="" value="<?php echo $jenis_laporan; ?>" >
-        </div>
-    <?php } ?>
+        <!-- <?php if(!empty($jenis_laporan)){?>  -->
+            <!-- <div class="form-group"> -->
+                <!-- <label class="exampleInputFile">Jenis laporan</label> -->
+                <!-- <input type="text" class="form-control" id="jenis_laporan" name="jenis_laporan" placeholder="" value="<?php echo $jenis_laporan; ?>" disabled> -->
+            <!-- </div> -->
+        <!-- <?php }else{ ?> -->
+         <!-- <div class="form-group"> -->
+            <!-- <label class="exampleInputFile">Jenis laporan</label> -->
+            <!-- <input type="text" class="form-control" id="jenis_laporan" name="jenis_laporan" placeholder="" value="<?php echo $jenis_laporan; ?>" > -->
+        <!-- </div> -->
+    <!-- <?php } ?> -->
 
     <div class="form-group">
        

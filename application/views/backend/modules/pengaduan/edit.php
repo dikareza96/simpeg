@@ -94,10 +94,10 @@
             }
             ?>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="exampleInputFile">Jenis laporan</label>
                 <input type="text" class="form-control" id="jenis_laporan" name="jenis_laporan" placeholder="" value="<?php echo $jenis_laporan; ?>" disabled>
-            </div>
+            </div> -->
 
             <div class="form-group">
 
@@ -222,9 +222,9 @@
 
 <div class="box-footer">
     <a href="<?php echo base_url("".$route."/index")?>" type="button" class="btn btn-default ">Back</a>
-    <button type="submit" class="btn btn-info pull-right">Submit</button>
-</div>
-<!-- /.box-body -->
+    <!-- <button type="submit" class="btn btn-info pull-right">Submit</button> -->
+</div> 
+<!-- /.box-body
 
 <?php } ?>
 
